@@ -13,7 +13,7 @@
 
 [Referensi berdasarkan Web TK PTS](https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/)
 
-
+---
 ### 💾 Cerita Aplikasi
 
 🔈Latar Belakang:
@@ -23,6 +23,7 @@ Dalam era digital ini, kebiasaan membaca buku dibawah abad 21 semakin tergeser o
 📻 Manfaat:
 Manfaat dari website ini adalah pembaca dapat mengakses buku-buku yang diterbitkan pada periode terdahulu jauh sebelum masa modern, yaitu sebelum abad ke-21. Dengan membaca buku-buku terdahulu, pembaca dapat memahami suatu infromasi atau pengetahuan dari sudut pandang masyarakat pada periode yang berbeda, mengetahui teknologi dan budaya pada masa tersebut, serta dapat memahami bentuk permasalahan yang dihadapi pada periode terdahulu sekaligus memahami cara berpikir masyarakatnya lewat problem solving yang dilakukan. Tak hanya itu, pembaca dapat memperluas pemahaman berbahasa, mengingat bahwa bahasa dan susunan kosakata terdahulu lebih kompleks. Manfaat lain dari membaca buku-buku terbitan lama yaitu pembaca turut melestarikan karya-karya sastra bersejarah yang bisa saja hilang atau terlupakan.
 
+---
 ### 📓 Modul
 :unlock:**Autentikasi dan Otorisasi** - Catur Wira Mukti Nugroho
 Penjelasan:
@@ -62,6 +63,8 @@ Penjelasan:
 👵Pustakawan (Admin): Menambahkan buku baru, menghapus buku, dan mengedit keterangan buku.
 
 🙍Tamu (Guest): Melihat daftar buku yang ada pada aplikasi.
+
+---
 ### Alur Integrasi dengan Web Service Aplikasi Web
 
 Berikut adalah langkah-langkah yang akan dilakukan untuk mengintegrasikan aplikasi dengan server web:
@@ -73,6 +76,5 @@ Berikut adalah langkah-langkah yang akan dilakukan untuk mengintegrasikan aplika
 - Mengimplementasikan desain front-end untuk aplikasi berdasarkan desain website yang sudah ada sebelumnya.
 - Melakukan integrasi antara front-end dengan back-end dengan menggunakan konsep asynchronous HTTP.
 ---
-
 ### 🔗:**Tautan Berita Acara**
 [Berita Acara](https://docs.google.com/spreadsheets/d/1zmUzPm34MB2xwXZVjVh4mSuMAWh0hM1XZBRv8MRpI2g/edit?usp=sharing)
