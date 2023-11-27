@@ -51,11 +51,10 @@ Penjelasan:
 Penjelasan:
 - Halaman ini berisi request peminjam akan judul buku yang belum ada di perpustakaan.
 
-:open_file_folder:---***Sumber dataset Katalog Buku***---:open_file_folder:
-
+:open_file_folder:***Sumber dataset Katalog Buku***
 :paperclip: https://drive.google.com/file/d/17jiAwHx_68zUrolbTl75IoLRFK_JLYrx/view 
 
-
+---
 ### 📛 Role
 
 👦👧User Biasa (Member): Memasukkan judul buku yang ingin dibaca pada halaman bookmark, menghapus buku yang sudah tidak dibaca, memberi ulasan buku, mengajukan request pengadaan suatu buku.
