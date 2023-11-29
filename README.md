@@ -31,18 +31,25 @@ Penjelasan:
 - Pustakawan (admin) memiliki otorisasi berupa melakukan pengelolaan buku, seperti menambah dan mengurangi stok buku.
 
 :books:**Pengelolaan koleksi buku (Pustakawan)** - Catur Wira Mukti Nugroho
+
 Penjelasan:
 - Halaman ini berisi pilihan untuk menambahkan buku baru ke dalam perpustakaan, menghapus buku yang sudah ada dari daftar buku perpustakaan, serta mengubah deskripsi buku. Halaman ini hanya dapat digunakan oleh pustakawan.
 
 :stars:**Rating dan Review Buku** - Dyandra Nadine Zahira
+<<<<<<< HEAD
+=======
+
+>>>>>>> a3e827fc54e1cff9f4f60808fa4cd67580b68397
 Penjelasan: 
 - Halaman ini berisi Fitur rating & review dimana pembaca dapat memberi rating & review terhadap buku-buku dalam katalog. 
 
 :ledger:**Halaman Bookmark Member** - Gina Afia
+
 Penjelasan:
 - Halaman ini berisi daftar judul-judul buku yang akan/ingin dibaca oleh pengguna. Judul buku akan hilang apabila pengguna menekan tombol ‘unbookmark’.
 
 :hearts:**Booklist (Daftar shortlist buku yang disukai)** - Muhammad Hanif
+
 Penjelasan: 
 - Role member dapat membuat daftar buku yang disukai atau dalam antrean untuk dipinjam lalu dimasukkan ke dalam satu tabel dimana buku dari dataset default bisa di add dan di delete sesuai keinginan user member.
 		
@@ -54,7 +61,6 @@ Penjelasan:
 
 :paperclip: https://drive.google.com/file/d/17jiAwHx_68zUrolbTl75IoLRFK_JLYrx/view 
 
-
 ### 📛 Role
 
 👦👧User Biasa (Member): Memasukkan judul buku yang ingin dibaca pada halaman bookmark, menghapus buku yang sudah tidak dibaca, memberi ulasan buku, mengajukan request pengadaan suatu buku.
@@ -62,6 +68,7 @@ Penjelasan:
 👵Pustakawan (Admin): Menambahkan buku baru, menghapus buku, dan mengedit keterangan buku.
 
 🙍Tamu (Guest): Melihat daftar buku yang ada pada aplikasi.
+
 ### Alur Integrasi dengan Web Service Aplikasi Web
 
 Berikut adalah langkah-langkah yang akan dilakukan untuk mengintegrasikan aplikasi dengan server web:
@@ -76,3 +83,4 @@ Berikut adalah langkah-langkah yang akan dilakukan untuk mengintegrasikan aplika
 
 ### 🔗:**Tautan Berita Acara**
 [Berita Acara](https://docs.google.com/spreadsheets/d/1zmUzPm34MB2xwXZVjVh4mSuMAWh0hM1XZBRv8MRpI2g/edit?usp=sharing)
+
