@@ -13,21 +13,18 @@
 
 [Referensi berdasarkan Web TK PTS](https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/)
 
----
+
 ### 💾 Cerita Aplikasi
 
 🔈Latar Belakang:
 
-Dalam era digital ini, kebiasaan membaca buku dibawah abad 21 semakin tergeser oleh buku modern. Buku-buku lawas yang memiliki nilai sejarah dan kebudayaan seringkali terlupakan. Oleh karena itu, proyek pembuatan aplikasi perpustakaan online buku lawas memiliki latar belakang yang penting, relevan untuk memicu bangkitnya minat membaca buku lawas, dan menyadarkan pentingnya membaca buku lawas karena buku-buku inilah sumber evolusi menuju peradaban buku modern. Beberapa alasan utama dibalik pemilihan proyek ini adalah meningkatkan minat baca, terutama buku yang sudah tua atau lawas agar tidak menghilang, melestarikan warisan buku yang sudah ada sedari dulu agar warisannya tidak terputus, mampu memahami perubahan pola penulisan buku dari zaman ke zaman, serta mendorong penelitian dan kreativitas.
+Dalam era digital ini, kebiasaan membaca buku dibawah abad 21 semakin tergeser oleh buku modern. Buku-buku lawas yang memiliki nilai sejarah dan kebudayaan seringkali terlupakan. Oleh karena itu, proyek pembuatan website perpustakaan online buku lawas memiliki latar belakang yang penting, relevan untuk memicu bangkitnya minat membaca buku lawas, dan menyadarkan pentingnya membaca buku lawas karena buku-buku inilah sumber evolusi menuju peradaban buku modern. Beberapa alasan utama dibalik pemilihan proyek ini adalah meningkatkan minat baca, terutama buku yang sudah tua atau lawas agar tidak menghilang, melestarikan warisan buku yang sudah ada sedari dulu agar warisannya tidak terputus, mampu memahami perubahan pola penulisan buku dari zaman ke zaman, serta mendorong penelitian dan kreativitas.
 
-📻 Fungsi:
+📻 Manfaat:
+Manfaat dari website ini adalah pembaca dapat mengakses buku-buku yang diterbitkan pada periode terdahulu jauh sebelum masa modern, yaitu sebelum abad ke-21. Dengan membaca buku-buku terdahulu, pembaca dapat memahami suatu infromasi atau pengetahuan dari sudut pandang masyarakat pada periode yang berbeda, mengetahui teknologi dan budaya pada masa tersebut, serta dapat memahami bentuk permasalahan yang dihadapi pada periode terdahulu sekaligus memahami cara berpikir masyarakatnya lewat problem solving yang dilakukan. Tak hanya itu, pembaca dapat memperluas pemahaman berbahasa, mengingat bahwa bahasa dan susunan kosakata terdahulu lebih kompleks. Manfaat lain dari membaca buku-buku terbitan lama yaitu pembaca turut melestarikan karya-karya sastra bersejarah yang bisa saja hilang atau terlupakan.
 
-Fungsi dari aplikasi ini adalah pembaca dapat mengakses buku-buku yang diterbitkan pada periode terdahulu jauh sebelum masa modern, yaitu sebelum abad ke-21. Dengan membaca buku-buku terdahulu, pembaca dapat memahami suatu infromasi atau pengetahuan dari sudut pandang masyarakat pada periode yang berbeda, mengetahui teknologi dan budaya pada masa tersebut, serta dapat memahami bentuk permasalahan yang dihadapi pada periode terdahulu sekaligus memahami cara berpikir masyarakatnya lewat problem solving yang dilakukan. Tak hanya itu, pembaca dapat memperluas pemahaman berbahasa, mengingat bahwa bahasa dan susunan kosakata terdahulu lebih kompleks. Manfaat lain dari membaca buku-buku terbitan lama yaitu pembaca turut melestarikan karya-karya sastra bersejarah yang bisa saja hilang atau terlupakan.
-
----
 ### 📓 Modul
 :unlock:**Autentikasi dan Otorisasi** - Catur Wira Mukti Nugroho
-
 Penjelasan:
 - Mengatur registrasi, login, dan logout pengguna.
 - engguna (member) memiliki otorisasi berupa dapat meminjam buku (bookmark), mengajukan request buku, memberi rating dan review buku, serta membuat booklist milik pribadi.
@@ -39,7 +36,10 @@ Penjelasan:
 - Halaman ini berisi pilihan untuk menambahkan buku baru ke dalam perpustakaan, menghapus buku yang sudah ada dari daftar buku perpustakaan, serta mengubah deskripsi buku. Halaman ini hanya dapat digunakan oleh pustakawan.
 
 :stars:**Rating dan Review Buku** - Dyandra Nadine Zahira
+<<<<<<< HEAD
+=======
 
+>>>>>>> a3e827fc54e1cff9f4f60808fa4cd67580b68397
 Penjelasan: 
 - Halaman ini berisi Fitur rating & review dimana pembaca dapat memberi rating & review terhadap buku-buku dalam katalog. 
 
@@ -57,11 +57,10 @@ Penjelasan:
 Penjelasan:
 - Halaman ini berisi request peminjam akan judul buku yang belum ada di perpustakaan.
 
----
-:open_file_folder:***Sumber dataset Katalog Buku***
+:open_file_folder:---***Sumber dataset Katalog Buku***---:open_file_folder:
+
 :paperclip: https://drive.google.com/file/d/17jiAwHx_68zUrolbTl75IoLRFK_JLYrx/view 
 
----
 ### 📛 Role
 
 👦👧User Biasa (Member): Memasukkan judul buku yang ingin dibaca pada halaman bookmark, menghapus buku yang sudah tidak dibaca, memberi ulasan buku, mengajukan request pengadaan suatu buku.
@@ -70,18 +69,18 @@ Penjelasan:
 
 🙍Tamu (Guest): Melihat daftar buku yang ada pada aplikasi.
 
----
-### Alur pengintegrasian dengan web service untuk terhubung dengan aplikasi web yang sudah dibuat saat Proyek Tengah Semester
+### Alur Integrasi dengan Web Service Aplikasi Web
 
 Berikut adalah langkah-langkah yang akan dilakukan untuk mengintegrasikan aplikasi dengan server web:
-- Menambahkan cors headers pada proyek python dan melakukan perubahan tambahan pada settinngs.py untuk dapat menggunakan cors headers.
-- Membuat applikasi baru pada proyek tengah semester untuk melakukan pengolahan request dari aplikasi flutter yang akan dibuat agar dapat dilakukan proses create objek model, fetching data dalam bentuk JSON, serta otentikasi.
+- Membuat applikasi baru pada proyek tengah semester untuk melakukan pengolahan request dari aplikasi flutter yang akan dibuat agar dapat dilakukan proses create model, fetching data dalam bentuk JSON, serta otentikasi.
 - Membuat model item yang akan digunakan pada flutter yang merupakan proses konversi data yang diterima dalam bentuk JSON.
-- Membuat tambahan dependensi ke proyek berupa http, provider, serta pbp_django_auth.
-- Melakukan routing fungsi-fungsi pada proyek flutter dengan proyek django untuk melakukan pemanggilan fungsi otentikasi dan pembuatan objek baru.
-- Menggunakan future builder sebagai widget untuk menampilkan data secara async serta widget provider sebagai widget utama main.dart flutter.
-- Mengubah manifest android untuk membolehkan akses internet pada aplikasi flutter.
 
+- Mengimplementasikan sebuah wrapper class dengan menggunakan library http dan map untuk mendukung penggunaan cookie-based authentication pada aplikasi.
+- Mengimplementasikan REST API pada Django (views.py) dengan menggunakan JsonResponse atau Django JSON Serializer.
+- Mengimplementasikan desain front-end untuk aplikasi berdasarkan desain website yang sudah ada sebelumnya.
+- Melakukan integrasi antara front-end dengan back-end dengan menggunakan konsep asynchronous HTTP.
 ---
+
 ### 🔗:**Tautan Berita Acara**
 [Berita Acara](https://docs.google.com/spreadsheets/d/1zmUzPm34MB2xwXZVjVh4mSuMAWh0hM1XZBRv8MRpI2g/edit?usp=sharing)
+
