@@ -1,5 +1,6 @@
 import 'package:ancestralreads/authentication/login.dart';
 import 'package:ancestralreads/authentication/register.dart';
+import 'package:ancestralreads/booklist/page/booklistpage.dart';
 import 'package:ancestralreads/menu.dart';
 import 'package:flutter/material.dart';
 
@@ -71,6 +72,18 @@ class LeftDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const RegisterApp(),
+                )
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.menu_book),
+            title: const Text('Halaman Booklist'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const BookList(),
                 )
               );
             },

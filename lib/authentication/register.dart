@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -31,9 +34,6 @@ class _RegisterState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Register Account'),
-      ),
       body: RegisterForm(formKey: _formKey),
     );
   }
@@ -63,12 +63,36 @@ class _FormRegister extends State<RegisterForm> {
       key: formKey,
       child: SingleChildScrollView(
           child: Container(
-            margin: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Colors.green,
+                  Colors.white,
+                  Colors.white,
+                  Colors.white,
+                ],
+              ),
+            ),
             padding: const EdgeInsets.all(20.0),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Center(
-                child: Text("Register",
-                  style: TextStyle(fontSize: 18),),
+              const Padding(
+                padding: EdgeInsets.only(top: 174.0, bottom: 97.0),
+                child: Center(
+                  child: Text(
+                    "AncestralReads",
+                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.black),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Register",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
               ),
               Padding(
                 // Menggunakan padding sebesar 8 pixels
@@ -76,9 +100,8 @@ class _FormRegister extends State<RegisterForm> {
                 child: TextFormField(
                   decoration: InputDecoration(
                     labelText: "Username ",
-                    icon: const Icon(Icons.title),
-                    // Menambahkan icon agar lebih intuitif
-                    // Menambahkan circular border agar lebih rapi
+                    filled: true,
+                    fillColor: Color.fromARGB(20, 80, 56, 188),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
@@ -95,13 +118,6 @@ class _FormRegister extends State<RegisterForm> {
                       username = value!;
                     });
                   },
-                  // // Validator sebagai validasi form
-                  // validator: (String? value) {
-                  //   if (value == null || value.isEmpty) {
-                  //     return 'Email tidak boleh kosong!';
-                  //   }
-                  //   return null;
-                  // },
                 ),
               ),
               Padding(
@@ -111,9 +127,8 @@ class _FormRegister extends State<RegisterForm> {
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: "Password ",
-                    icon: const Icon(Icons.password),
-                    // Menambahkan icon agar lebih intuitif
-                    // Menambahkan circular border agar lebih rapi
+                    filled: true,
+                    fillColor: Color.fromARGB(20, 80, 56, 188),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
@@ -130,13 +145,6 @@ class _FormRegister extends State<RegisterForm> {
                       password = value!;
                     });
                   },
-                  // Validator sebagai validasi form
-                  // validator: (String? value) {
-                  //   if (value == null || value.isEmpty) {
-                  //     return 'Password tidak boleh kosong!';
-                  //   }
-                  //   return null;
-                  // },
                 ),
               ),
               Padding(
@@ -146,10 +154,9 @@ class _FormRegister extends State<RegisterForm> {
                 child: TextFormField(
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: "Password Confirmation",
-                    icon: const Icon(Icons.password),
-                    // Menambahkan icon agar lebih intuitif
-                    // Menambahkan circular border agar lebih rapi
+                    labelText: "Confirm Password",
+                    filled: true,
+                    fillColor: Color.fromARGB(20, 80, 56, 188),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
@@ -166,36 +173,26 @@ class _FormRegister extends State<RegisterForm> {
                       password1 = value!;
                     });
                   },
-                  // // Validator sebagai validasi form
-                  // validator: (String? value) {
-                  //   if (value == null || value.isEmpty) {
-                  //     return 'Password tidak boleh kosong!';
-                  //   }
-                  //   return null;
-                  // },
                 ),
               ),
               Padding(
                 // Menggunakan padding sebesar 8 pixels
-                padding: const EdgeInsets.all(24.0),
+                padding: const EdgeInsets.only(top: 24.0),
                 child:Center (
                   child: TextButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 21, 104, 230)),
-
+                    style: TextButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 20, 79, 54),
+                      fixedSize: const Size(250, 32),
                     ),
                     onPressed: () async {
                       final response = await request.post(
                           'http://10.0.2.2:8000/auth/register/',
-                          // 'http://$port/flutter_register/',
                           {
                             "username": username,
                             "password1": password,
-                            "password2": password1
+                            "password2": password1,
+                            'is_staff': 'true',
                           });
-
-                      print(formKey);
-                      print(response['status']==false);
 
                       if (response['status']==true) {
                         // ignore: use_build_context_synchronously
@@ -213,7 +210,48 @@ class _FormRegister extends State<RegisterForm> {
                       }
                     },
                     child: const Text(
-                      "Simpan",
+                      "Sign Up as Pustakawan",
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                // Menggunakan padding sebesar 8 pixels
+                padding: const EdgeInsets.only(top: 5.0),
+                child:Center (
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 20, 79, 54),
+                      fixedSize: const Size(250, 32),
+                    ),
+                    onPressed: () async {
+                      final response = await request.post(
+                          'http://127.0.0.1:8000/auth/register/',
+                          {
+                            "username": username,
+                            "password1": password,
+                            "password2": password1,
+                            'is_staff': '',
+                          });
+
+                      if (response['status']==true) {
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                              const LoginApp(),
+                            ));
+                      } else {
+                        setState(() {
+                          message = response['message'];
+                          print(message);
+                        });
+                      }
+                    },
+                    child: const Text(
+                      "Sign Up as Pembaca",
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),
