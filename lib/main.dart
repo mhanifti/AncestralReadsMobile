@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ancestralreads/menu.dart';
+import 'package:ancestralreads/guest.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:ancestralreads/Kelola/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const MyHomePage(),
+        home: const GuestPage(),
       ),
     );
   }
