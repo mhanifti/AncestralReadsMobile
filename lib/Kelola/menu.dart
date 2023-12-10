@@ -21,7 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomeState extends State<HomePage> {
   Future<List<Buku>> fetchBuku() async {
     var url = Uri.parse(
-        'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/json/');
+        'https://10.0.2.2:8000/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -69,7 +69,7 @@ class _HomeState extends State<HomePage> {
                   ),
                   onPressed: () async {
                     final response = await request.logout(
-                        "http://ancestralreads-b01-tk.pbp.cs.ui.ac.id/auth/logout/");
+                        "http://10.0.2.2:8000/auth/logout/");
                     String message = response["message"];
                     if (response['status']) {
                       String uname = response["username"];
