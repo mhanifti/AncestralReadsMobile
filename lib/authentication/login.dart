@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:ancestralreads/menu.dart';
-
+import 'package:ancestralreads/guest.dart';
+import 'package:ancestralreads/Kelola/menu.dart';
 class LoginApp extends StatelessWidget {
   const LoginApp({super.key});
 
@@ -60,24 +60,39 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () async {
                 String username = _usernameController.text;
                 String password = _passwordController.text;
-                
-                final response = await request.login("http://127.0.0.1:8000/auth/login/", {
+                final response = await request.login("http://10.0.2.2:8000/auth/login/", {
                   'username': username,
                   'password': password,
                 });
 
                 if (request.loggedIn) {
-                  String message = response['message'];
-                  String uname = response['username'];
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyHomePage()),
-                  );
-                  ScaffoldMessenger.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(
-                        SnackBar(content: Text("$message Selamat datang, $uname."))
+                  if (response['is_staff']) {
+                    String message = response['message'];
+                    String uname = response['username'];
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => GuestPage()),
                     );
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(
+                          SnackBar(
+                              content: Text("$message Selamat datang, $uname."))
+                      );
+                  } else {
+                    String message = response['message'];
+                    String uname = response['username'];
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage(userName: uname)),
+                    );
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(
+                          SnackBar(
+                              content: Text("$message Selamat datang, $uname."))
+                      );
+                  }
                 } else {
                   showDialog(
                       context: context,
