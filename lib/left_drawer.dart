@@ -1,6 +1,7 @@
 import 'package:ancestralreads/authentication/login.dart';
 import 'package:ancestralreads/authentication/register.dart';
 import 'package:ancestralreads/menu.dart';
+import 'package:ancestralreads/review/review_page.dart';
 import 'package:flutter/material.dart';
 
 class LeftDrawer extends StatelessWidget {
@@ -71,6 +72,18 @@ class LeftDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const RegisterApp(),
+                )
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.app_registration),
+            title: const Text('Review'),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Review(),
                 )
               );
             },
