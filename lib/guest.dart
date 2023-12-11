@@ -17,7 +17,7 @@ class GuestPage extends StatefulWidget {
 class _GuestPageState extends State<GuestPage> {
   Future<List<Buku>> fetchBuku() async {
     var url = Uri.parse(
-        'https://10.0.2.2:8000/json/');
+        'http://localhost:8000/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ancestralreads/booklist/page/bookaddpage.dart';
 import 'package:ancestralreads/left_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -23,14 +24,14 @@ class BooklistPage extends State<BookList> {
     return Scaffold(
       appBar: AppBar(
         title: const Align(
-          alignment: AlignmentDirectional(-0.20, 0.00),
+          alignment: AlignmentDirectional(-0.15, 0.00),
           child: Text(
             'Booklist',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'Outfit',
               color: Colors.black,
-              fontSize: 30,
+              fontSize: 20,
             ),
           ),
         ),
@@ -102,7 +103,7 @@ class BooklistPage extends State<BookList> {
                               icon: Icon(Icons.delete),
                               onPressed: () async {
                                 final response = await request.postJson(
-                                    'http://10.0.2.2:8000/booklist/delete-book-flutter/',
+                                    'http://localhost:8000/booklist/delete-book-flutter/',
                                     jsonEncode(<String, int>{
                                       'pk': snapshot.data[index].pk,
                                     }));
@@ -133,7 +134,12 @@ class BooklistPage extends State<BookList> {
           hoverColor: Colors.cyan,
           icon: const Icon(Icons.add),
           onPressed: () {
-            // TODO: Menuju ke bookaddpage
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const BookAdd(),
+                )
+            );
           },
         ),
       ),
