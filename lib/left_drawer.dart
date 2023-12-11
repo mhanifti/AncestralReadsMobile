@@ -1,5 +1,6 @@
 import 'package:ancestralreads/authentication/login.dart';
 import 'package:ancestralreads/authentication/register.dart';
+import 'package:ancestralreads/bookmarks/bookmarks_page.dart';
 import 'package:ancestralreads/menu.dart';
 import 'package:flutter/material.dart';
 
@@ -74,7 +75,18 @@ class LeftDrawer extends StatelessWidget {
                 )
               );
             },
-          )
+          ),
+          ListTile( //left drawernya bookmarks
+            leading: const Icon(Icons.shopping_basket),
+            title: const Text('Bookmarks'),
+            onTap: () {
+                // Route menu ke halaman produk
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BookmarksPage()),
+                );
+            },
+          ),
         ],
       ),
     );
