@@ -58,9 +58,6 @@ class MyHomePage extends StatelessWidget {
               //     return ShopCard(item);
               //   }).toList(),
               // ),
-
-              //TODO: Bikin button di widget buku catur, event handlingnya lgsg disitu tanpa perlu navigate kemana2
-              
             ],
           ),
         ),
