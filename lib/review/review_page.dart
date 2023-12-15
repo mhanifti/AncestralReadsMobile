@@ -39,10 +39,9 @@ class ReviewPage extends State<Review> {
     // final request = context.watch<CookieRequest>();
     Future<List<Ulasan>> fetchReview(request) async {
       var response = await request.get(
-          'http://127.0.0.1:8000/review/json/',
+          'http://localhost:8000/review/json/',
           
       );
-
       // melakukan decode response menjadi bentuk json
       var data = response;
 
@@ -142,7 +141,7 @@ class ReviewPage extends State<Review> {
                           child: const Text('Delete'),
                           onPressed: () async {
                             final url =
-                                Uri.parse('http://127.0.0.1:8000/review/delete-ajax/');
+                                Uri.parse('http://localhost:8000/review/delete-ajax/');
                             final response = await http.delete(url);
 
                             if (response.statusCode == 201) {

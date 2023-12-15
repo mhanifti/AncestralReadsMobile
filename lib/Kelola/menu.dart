@@ -209,10 +209,11 @@ class _HomeState extends State<HomePage> {
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                                trailing: Column(
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
                                     IconButton(
-                                      icon: Icon(Icons.add),
+                                      icon: const Icon(Icons.bookmark_add_outlined),
                                       onPressed: () async {
                                         var data = jsonEncode({'pk': snapshot.data[index].pk});
                                         await request.post(
@@ -222,7 +223,7 @@ class _HomeState extends State<HomePage> {
                                       },
                                     ),
                                     IconButton (
-                                        icon: Icon(Icons.reviews_outlined),
+                                        icon: const Icon(Icons.reviews_outlined),
                                         onPressed: () async {
                                           Navigator.push(
                                               context,
