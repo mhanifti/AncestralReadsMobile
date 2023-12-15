@@ -222,12 +222,12 @@ class _HomeState extends State<HomePage> {
                                   if (response['status'] == 'ok') {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(const SnackBar(
-                                    content: Text("Buku berhasil dibookmark!")
+                                    content: Text("Buku berhasil ditambah ke bookmark!")
                                     ));
                                   } else {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(const SnackBar(
-                                    content: Text("Buku sudah pernah dibookmark!")
+                                    content: Text("Buku sudah pernah ditambah ke bookmark!")
                                     ));
                                   }
                                 },

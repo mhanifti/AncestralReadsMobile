@@ -37,10 +37,10 @@ class _BookmarksPageState extends State<BookmarksPage> {
   }
       return Scaffold(
           appBar: AppBar(
-            backgroundColor: const Color(0xff144f36),
-            title: const Text('Halaman Bookmarks',
+            backgroundColor: const Color(0xff898272),
+            title: const Text('Bookmarks',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'Poppins'
             )
             ),
