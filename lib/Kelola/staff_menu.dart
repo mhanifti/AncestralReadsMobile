@@ -354,7 +354,7 @@ class _LibrarianState extends State<LibrarianPage> {
             backgroundColor: const Color(0xffffffff),
             scrollable: true,
             title: const Text(
-              "Data buku baru",
+              "Data perubahan buku yang akan dilakukan",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
@@ -398,7 +398,7 @@ class _LibrarianState extends State<LibrarianPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              hintText: "Judul buku yang akan disimpan",
+                              hintText: "Judul buku yang baru",
                               labelText: "Title",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
@@ -421,7 +421,7 @@ class _LibrarianState extends State<LibrarianPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              hintText: "Bahasa dari buku yang akan disimpan",
+                              hintText: "Bahasa dari buku yang baru",
                               labelText: "Language",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
@@ -444,7 +444,7 @@ class _LibrarianState extends State<LibrarianPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              hintText: "Nama depan dari pembuat buku",
+                              hintText: "Data nama depan penulis terbaru",
                               labelText: "First Name",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
@@ -467,7 +467,7 @@ class _LibrarianState extends State<LibrarianPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              hintText: "Nama belakang dari penulis buku",
+                              hintText: "Data nama belakang penulis terbaru",
                               labelText: "Last Name",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
@@ -490,7 +490,7 @@ class _LibrarianState extends State<LibrarianPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              hintText: "Tahun rilis buku yang akan disimpan",
+                              hintText: "Tahun rilis buku terbaru",
                               labelText: "Year",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
@@ -513,7 +513,7 @@ class _LibrarianState extends State<LibrarianPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              hintText: "Cakupan buku yang akan disimpan",
+                              hintText: "Cakupan buku terbaru",
                               labelText: "Subjects",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
@@ -536,7 +536,7 @@ class _LibrarianState extends State<LibrarianPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              hintText: "Kategori buku yang akan di simpan",
+                              hintText: "Kategori buku terbaru",
                               labelText: "Bookshelves",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
@@ -585,7 +585,7 @@ class _LibrarianState extends State<LibrarianPage> {
                         if (response['status'] == 'success') {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
-                            content: Text("Buku baru berhasil disimpan!"),
+                            content: Text("Data buku berhasil diubah"),
                           ));
                           Navigator.of(context).pop();
                         } else {
@@ -849,9 +849,15 @@ class _LibrarianState extends State<LibrarianPage> {
                                         onPressed: () async {
                                           final response = await request.get(
                                               "http://localhost:8000/hapus-flutter/${snapshot.data![index].pk}");
-                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                            content: Text("buku telah dihapus dan dibuang."),
-                                          ));
+                                          if (response["status"] == "success") {
+                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                              content: Text("buku telah berhasil dihapus."),
+                                            ));
+                                          } else {
+                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                              content: Text("buku gagal dihapus."),
+                                            ));
+                                          }
                                         },
                                       ),
                                     ),
