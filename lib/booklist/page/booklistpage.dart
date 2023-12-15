@@ -85,15 +85,19 @@ class BooklistPage extends State<BookList> {
                                         child: Text(
                                           '${snapshot.data?[index].fields.title}',
                                           overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(fontSize: 4),
+                                          style: const TextStyle(fontSize: 16),
                                         ),
                                       ),
                                       SizedBox(height: 4), // Add some space between the title and the details
-                                      Text(
-                                        '${snapshot.data?[index].fields.firstName} | '
-                                            '${snapshot.data?[index].fields.bookshelves} | '
-                                            '${snapshot.data?[index].fields.year}',
-                                        style: const TextStyle(fontSize: 10),
+                                      Container(
+                                        width: 300,
+                                          child: Text(
+                                            '${snapshot.data?[index].fields.firstName} | '
+                                                '${snapshot.data?[index].fields.bookshelves} | '
+                                                '${snapshot.data?[index].fields.year}',
+                                            style: const TextStyle(fontSize: 10),
+                                            overflow: TextOverflow.ellipsis,
+                                        )
                                       ),
                                     ],
                                   ),

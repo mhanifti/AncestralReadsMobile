@@ -215,7 +215,7 @@ class _HomeState extends State<HomePage> {
                                     IconButton(
                                       icon: const Icon(Icons.bookmark_add_outlined),
                                       onPressed: () async {
-                                        var data = jsonEncode({'pk': snapshot.data[index].pk});
+                                        var data = jsonEncode({'pk': snapshot.data![index].pk});
                                         await request.post(
                                           'http://localhost:8000/booklist/add-book-flutter/',
                                           data,
@@ -232,7 +232,28 @@ class _HomeState extends State<HomePage> {
                                               )
                                           );
                                         }
-                                    )
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.bookmark_add),
+                                      onPressed: () async {
+                                        var data = jsonEncode({'bookId': snapshot.data![index].pk});
+                                        final response = await request.post(
+                                            'http://localhost:8000/bookmarks/add-bookmark/',
+                                            data,
+                                        );
+                                        if (response['status'] == 'ok') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                              content: Text("Buku berhasil ditambah ke bookmark!")
+                                          ));
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                              content: Text("Buku sudah pernah ditambah ke bookmark!")
+                                          ));
+                                        }
+                                      },
+                                    ),
                                   ],
                                 )
                               ),

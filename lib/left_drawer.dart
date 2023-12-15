@@ -1,9 +1,10 @@
-import 'package:ancestralreads/authentication/login.dart';
-import 'package:ancestralreads/authentication/register.dart';
-import 'package:ancestralreads/review/review_page.dart';
-import 'package:ancestralreads/booklist/page/booklistpage.dart';
-import 'package:ancestralreads/guest.dart';
+import 'authentication/login.dart';
+import 'authentication/register.dart';
+import 'review/review_page.dart';
+import 'booklist/page/booklistpage.dart';
+import 'guest.dart';
 import 'package:flutter/material.dart';
+import 'bookmarks/bookmarks_page.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -101,7 +102,21 @@ class LeftDrawer extends StatelessWidget {
                 )
               );
             },
-          )
+          ),
+          ListTile( //left drawernya bookmarks
+            title: const Text('Halaman Bookmarks',
+              style: TextStyle(
+                  color: Colors.white
+              ),
+            ),
+            onTap: () {
+              // Route menu ke halaman produk
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BookmarksPage()),
+              );
+            },
+          ),
         ],
       ),
     );
