@@ -2,7 +2,7 @@ import 'package:ancestralreads/authentication/login.dart';
 import 'package:flutter/material.dart';
 import 'package:ancestralreads/left_drawer.dart';
 import 'package:http/http.dart' as http;
-import 'package:ancestralreads/Kelola/Buku.dart';
+import 'package:ancestralreads/Kelola/buku.dart';
 import 'dart:convert';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -82,7 +82,7 @@ class _HomeState extends State<HomePage> {
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("$message"),
+                        content: Text('$message'),
                       ));
                     }
                   },

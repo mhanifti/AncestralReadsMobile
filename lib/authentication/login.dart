@@ -3,6 +3,7 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:ancestralreads/guest.dart';
 import 'package:ancestralreads/Kelola/menu.dart';
+import 'package:ancestralreads/Kelola/staff_menu.dart';
 class LoginApp extends StatelessWidget {
   const LoginApp({super.key});
 
@@ -71,8 +72,8 @@ class _LoginPageState extends State<LoginPage> {
                     String uname = response['username'];
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => GuestPage()),
-                    );
+                      MaterialPageRoute(builder: (context) => LibrarianPage(userName: uname),
+                    ));
                     ScaffoldMessenger.of(context)
                       ..hideCurrentSnackBar()
                       ..showSnackBar(
