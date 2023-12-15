@@ -17,7 +17,7 @@ class Review extends StatefulWidget {
   State<Review> createState() => ReviewPage();
 }
 
-class StarRating extends StatelessWidget {
+class StarRating extends StatelessWidget{
   final int rating;
 
   StarRating({required this.rating});
