@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:ancestralreads/Kelola/Buku.dart';
+import 'package:ancestralreads/review/getTitle.dart';
 import 'package:ancestralreads/review/review_models.dart';
 import 'package:http/http.dart' as http;
 import 'package:ancestralreads/left_drawer.dart';
@@ -40,12 +41,10 @@ class ReviewPage extends State<Review> {
 
     // final request = context.watch<CookieRequest>();
     Future<List<Ulasan>> fetchReview(request) async {
-      // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
       var response = await request.get(
-          'http://127.0.0.1:8000/review/json/',
+          'http://localhost:8000/review/json/',
           
       );
-
       // melakukan decode response menjadi bentuk json
       var data = response;
 
@@ -113,11 +112,13 @@ class ReviewPage extends State<Review> {
                       mainAxisAlignment: MainAxisAlignment.center, // Center vertically
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          "${snapshot.data![index].fields.buku}",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center, // Center horizontally
-                        ),
+                        FutureBuilder(future: getTitle(request, snapshot.data[index].fields.buku), builder: (context, AsyncSnapshot snapshot) {
+                          return Text(
+                            snapshot.data,
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center, // Center horizontally
+                          );
+                        }),
                         const SizedBox(height: 10),
                         Text(
                           "Reviewer: ${snapshot.data[index].fields.reviewerName}",
@@ -142,7 +143,7 @@ class ReviewPage extends State<Review> {
                         // tambah tombol delete
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Color.fromARGB(255, 180, 204, 176), // Change button color
+                            backgroundColor: const Color.fromARGB(255, 180, 204, 176), // Change button color
                           ),
                           child: const Text('Delete'),
                           onPressed: () async {

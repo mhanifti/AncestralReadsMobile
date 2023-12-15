@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:ancestralreads/left_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
-import '../model/Book.dart';
+import '../api/fetchBook.dart';
 
 class BookList extends StatefulWidget {
   const BookList({
@@ -21,21 +21,6 @@ class BooklistPage extends State<BookList> {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
-    Future<List<Book>> fetchBook() async {
-      var response = await request.get(
-        'http://127.0.0.1:8000/booklist/get-book-ft/'
-      );
-      var data = response;
-      List<Book> listBook = [];
-
-      for (var d in data) {
-        if (d != null) {
-          listBook.add(Book.fromJson(d));
-        }
-      }
-      return listBook;
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Align(
@@ -55,7 +40,7 @@ class BooklistPage extends State<BookList> {
       ),
       drawer: const LeftDrawer(),
       body: FutureBuilder(
-        future: fetchBook(),
+        future: fetchBook(request),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.data == null) {
             return const Center(child: CircularProgressIndicator());
@@ -72,17 +57,72 @@ class BooklistPage extends State<BookList> {
               return ListView.builder(
                 itemCount: snapshot.data?.length,
                 itemBuilder: (_, index) => Padding(
-                  padding: const EdgeInsets.all(5),
+                  padding: const EdgeInsetsDirectional.all(8),
                   child: Container(
-                    height: 50,
-                    child: Center(
-                        child: Text(
-                        "${snapshot.data[index].fields.title}"
-                      )
+                    height: 80.0,
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(229, 223, 210, 100.0),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Color.fromRGBO(229, 223, 210, 100.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.all(5),
+                          child: Align(
+                            alignment: AlignmentDirectional.centerStart,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.only(start: 25.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 300,
+                                        child: Text(
+                                          '${snapshot.data?[index].fields.title}',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(fontSize: 4),
+                                        ),
+                                      ),
+                                      SizedBox(height: 4), // Add some space between the title and the details
+                                      Text(
+                                        '${snapshot.data?[index].fields.firstName} | '
+                                            '${snapshot.data?[index].fields.bookshelves} | '
+                                            '${snapshot.data?[index].fields.year}',
+                                        style: const TextStyle(fontSize: 10),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: AlignmentDirectional.centerEnd,
+                            child: IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () async {
+                                final response = await request.postJson(
+                                    'http://localhost:8000/booklist/delete-book-flutter/',
+                                    jsonEncode(<String, int>{
+                                      'pk': snapshot.data[index].pk,
+                                    }));
+                                if (response['status'] == 'success') {
+                                  setState(() {
+                                    BooklistPage();
+                                  });
+                                }
+                              },
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -90,7 +130,7 @@ class BooklistPage extends State<BookList> {
             }
           }
         },
-      )
+      ),
     );
   }
 }
