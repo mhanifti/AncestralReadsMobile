@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomeState extends State<HomePage> {
   Future<List<Buku>> fetchBuku() async {
     var url = Uri.parse(
-        'http://10.0.2.2:8000/json/');
+        'http://localhost:8000/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -67,7 +67,7 @@ class _HomeState extends State<HomePage> {
                   ),
                   onPressed: () async {
                     final response = await request.logout(
-                        "http://10.0.2.2:8000/auth/logout/");
+                        "http://localhost:8000/auth/logout/");
                     String message = response["message"];
                     if (response['status']) {
                       String uname = response["username"];
@@ -214,7 +214,7 @@ class _HomeState extends State<HomePage> {
                                       onPressed: () async {
                                         var data = jsonEncode({'pk': snapshot.data[index].pk});
                                         await request.post(
-                                          'http://10.0.2.2:8000/booklist/add-book-flutter/',
+                                          'http://localhost:8000/booklist/add-book-flutter/',
                                           data,
                                         );
                                       },
