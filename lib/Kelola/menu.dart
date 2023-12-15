@@ -69,7 +69,7 @@ class _HomeState extends State<HomePage> {
                   ),
                   onPressed: () async {
                     final response = await request.logout(
-                        "http://localhost:8000/auth/logout/");
+                        "https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/auth/logout/");
                     String message = response["message"];
                     if (response['status']) {
                       String uname = response["username"];
@@ -167,7 +167,7 @@ class _HomeState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Tidak ada data relic.",
+                            "Tidak ada data buku.",
                             style: TextStyle(color: Color(0xff59A5D8), fontSize: 20),
                           ),
                           SizedBox(height: 8),
@@ -217,7 +217,7 @@ class _HomeState extends State<HomePage> {
                                       onPressed: () async {
                                         var data = jsonEncode({'pk': snapshot.data![index].pk});
                                         await request.post(
-                                          'http://localhost:8000/booklist/add-book-flutter/',
+                                          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/booklist/add-book-flutter/',
                                           data,
                                         );
                                       },
@@ -238,7 +238,7 @@ class _HomeState extends State<HomePage> {
                                       onPressed: () async {
                                         var data = jsonEncode({'bookId': snapshot.data![index].pk});
                                         final response = await request.post(
-                                            'http://localhost:8000/bookmarks/add-bookmark/',
+                                            'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/bookmarks/add-bookmark/',
                                             data,
                                         );
                                         if (response['status'] == 'ok') {

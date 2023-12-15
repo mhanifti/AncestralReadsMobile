@@ -20,7 +20,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
     Future<List<Product>> fetchBook() async {
 
       var response = await request.get(
-          'http://localhost:8000/bookmarks/get-bookmark/'
+          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/bookmarks/get-bookmark/'
       );
       var data = response;
 

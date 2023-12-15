@@ -279,7 +279,7 @@ class _LibrarianState extends State<LibrarianPage> {
                       if (_formKey.currentState!.validate()) {
                         // Kirim ke Django dan tunggu respons
                         final response = await request.postJson(
-                            "http://localhost:8000/create-book/",
+                            "https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/create-book/",
                             jsonEncode(<String, String>{
                               'text_number' : _textNumber.toString(),
                               'title': _title,
@@ -567,8 +567,9 @@ class _LibrarianState extends State<LibrarianPage> {
                       shape: MaterialStateProperty.all<OutlinedBorder>(const RoundedRectangleBorder()),
                       backgroundColor: MaterialStateProperty.all(const Color(0xff144f36)),
                     ),
+                    //ancestralreads-b01-tk.pbp.cs.ui.ac.id
                     onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
+                      if (_formKey2.currentState!.validate()) {
                         // Kirim ke Django dan tunggu respons
                         final response = await request.postJson(
                             "http://localhost:8000/edit-flutter/$id",
@@ -643,7 +644,7 @@ class _LibrarianState extends State<LibrarianPage> {
           actions: <Widget> [
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.0),
-              child: Text("Home",
+              child: Text("Staff Page",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 16,
@@ -662,7 +663,7 @@ class _LibrarianState extends State<LibrarianPage> {
                   ),
                   onPressed: () async {
                     final response = await request.logout(
-                        "http://localhost:8000/auth/logout/");
+                        "https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/auth/logout/");
                     String message = response["message"];
                     if (response['status']) {
                       String uname = response["username"];
@@ -847,8 +848,8 @@ class _LibrarianState extends State<LibrarianPage> {
                                           size: 20,
                                         ),
                                         onPressed: () async {
-                                          final response = await request.get(
-                                              "http://localhost:8000/hapus-flutter/${snapshot.data![index].pk}");
+                                          final response = await request.(
+                                              "http://localhost:8000/hapus-flutter/${snapshot.data![index].pk}","");
                                           if (response["status"] == "success") {
                                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                               content: Text("buku telah berhasil dihapus."),

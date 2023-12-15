@@ -113,7 +113,7 @@ class BooklistPage extends State<BookList> {
                               icon: Icon(Icons.delete),
                               onPressed: () async {
                                 final response = await request.postJson(
-                                    'http://localhost:8000/booklist/delete-book-flutter/',
+                                    'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/booklist/delete-book-flutter/',
                                     jsonEncode(<String, int>{
                                       'pk': snapshot.data[index].pk,
                                     }));
