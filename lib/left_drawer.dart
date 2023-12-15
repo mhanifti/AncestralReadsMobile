@@ -1,7 +1,8 @@
 import 'package:ancestralreads/authentication/login.dart';
 import 'package:ancestralreads/authentication/register.dart';
-import 'package:ancestralreads/menu.dart';
 import 'package:ancestralreads/review/review_page.dart';
+import 'package:ancestralreads/booklist/page/booklistpage.dart';
+import 'package:ancestralreads/guest.dart';
 import 'package:flutter/material.dart';
 
 class LeftDrawer extends StatelessWidget {
@@ -10,11 +11,12 @@ class LeftDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: const Color(0xff144f36),
       child: ListView(
         children: [
           const DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.indigo,
+              color: Color(0xff144f36),
             ),
             child: Column(
               children: [
@@ -47,7 +49,7 @@ class LeftDrawer extends StatelessWidget {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MyHomePage(),
+                    builder: (context) => const GuestPage(),
                   ));
             },
           ),
@@ -84,6 +86,18 @@ class LeftDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const Review(),
+                  )
+                );
+              },
+            ),
+          ListTile(
+            leading: const Icon(Icons.menu_book),
+            title: const Text('Halaman Booklist'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const BookList(),
                 )
               );
             },
