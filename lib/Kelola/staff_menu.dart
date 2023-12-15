@@ -56,6 +56,9 @@ class _LibrarianState extends State<LibrarianPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
             backgroundColor: const Color(0xffffffff),
             scrollable: true,
             title: const Text(
@@ -302,7 +305,7 @@ class _LibrarianState extends State<LibrarianPage> {
                         }
                       }
                     },
-                    child: const Text("Tutup",
+                    child: const Text("Simpan buku baru",
                       style: TextStyle(
                         color: Color(0xffededed),
                         fontSize: 12,
@@ -322,7 +325,299 @@ class _LibrarianState extends State<LibrarianPage> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text("Simpan buku baru",
+                    child: const Text("Tutup",
+                      style: TextStyle(
+                        color: Color(0xffededed),
+                        fontSize: 12,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    )
+                ),
+              ),
+            ],
+          );
+        }
+    );
+  }
+
+  Future<void> _formEditDialog(BuildContext context, int id) {
+    final request = context.read<CookieRequest>();
+
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+            backgroundColor: const Color(0xffffffff),
+            scrollable: true,
+            title: const Text(
+              "Data buku baru",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+                height: 0.10,
+              ),
+            ),
+            content: Form(
+              key: _formKey2,
+              child: SingleChildScrollView(
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: "Nomer buku pada koleksi ancestral reads",
+                              labelText: "Text Number",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _textNumber = int.parse(value!);
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return "Text Number tidak boleh kosong!";
+                              }
+                              if (int.tryParse(value) == null) {
+                                return "Text Number harus berupa angka!";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: "Judul buku yang akan disimpan",
+                              labelText: "Title",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _title = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return "Title tidak boleh kosong!";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: "Bahasa dari buku yang akan disimpan",
+                              labelText: "Language",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _language = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return "Language tidak boleh kosong!";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: "Nama depan dari pembuat buku",
+                              labelText: "First Name",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _firstName = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return "First Name tidak boleh kosong!";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: "Nama belakang dari penulis buku",
+                              labelText: "Last Name",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _lastName = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return "Last Name tidak boleh kosong!";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: "Tahun rilis buku yang akan disimpan",
+                              labelText: "Year",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _year = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return "Year tidak boleh kosong!";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: "Cakupan buku yang akan disimpan",
+                              labelText: "Subjects",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _subjects = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return "Subjects tidak boleh kosong!";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: "Kategori buku yang akan di simpan",
+                              labelText: "Bookshelves",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _bookshelves = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return "Bookshelves tidak boleh kosong!";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ]
+                  )
+              ),
+            ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: FilledButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<OutlinedBorder>(const RoundedRectangleBorder()),
+                      backgroundColor: MaterialStateProperty.all(const Color(0xff144f36)),
+                    ),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        // Kirim ke Django dan tunggu respons
+                        final response = await request.postJson(
+                            "http://localhost:8000/edit-flutter/$id",
+                            jsonEncode(<String, String>{
+                              'text_number' : _textNumber.toString(),
+                              'title': _title,
+                              'language': _language,
+                              'first_name': _firstName,
+                              'last_name' : _lastName,
+                              'year' : _year,
+                              'subjects' : _subjects,
+                              'bookshelves' : _bookshelves
+                            }));
+                        if (response['status'] == 'success') {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text("Buku baru berhasil disimpan!"),
+                          ));
+                          Navigator.of(context).pop();
+                        } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content:
+                            Text("Terdapat kesalahan, silakan coba lagi."),
+                          ));
+                        }
+                      }
+                    },
+                    child: const Text("Edit buku",
+                      style: TextStyle(
+                        color: Color(0xffededed),
+                        fontSize: 12,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    )
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: FilledButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<OutlinedBorder>(const RoundedRectangleBorder()),
+                      backgroundColor: MaterialStateProperty.all(const Color(0xff144f36)),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Tutup",
                       style: TextStyle(
                         color: Color(0xffededed),
                         fontSize: 12,
@@ -541,7 +836,23 @@ class _LibrarianState extends State<LibrarianPage> {
                                           Icons.create_outlined,
                                           size: 20,
                                         ),
-                                        onPressed: () async => _formDialog(context),
+                                        onPressed: () async => _formEditDialog(context, snapshot.data![index].pk),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                      child: IconButton(
+                                        icon: const Icon(
+                                          Icons.delete_forever_outlined,
+                                          size: 20,
+                                        ),
+                                        onPressed: () async {
+                                          final response = await request.get(
+                                              "http://localhost:8000/hapus-flutter/${snapshot.data![index].pk}");
+                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                            content: Text("buku telah dihapus dan dibuang."),
+                                          ));
+                                        },
                                       ),
                                     ),
                                   ],
