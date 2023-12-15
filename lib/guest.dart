@@ -3,7 +3,7 @@ import 'package:ancestralreads/authentication/register.dart';
 import 'package:flutter/material.dart';
 import 'package:ancestralreads/left_drawer.dart';
 import 'package:http/http.dart' as http;
-import 'package:ancestralreads/Kelola/Buku.dart';
+import 'package:ancestralreads/Kelola/buku.dart';
 import 'dart:convert';
 import 'package:ancestralreads/main.dart';
 
@@ -17,7 +17,7 @@ class GuestPage extends StatefulWidget {
 class _GuestPageState extends State<GuestPage> {
   Future<List<Buku>> fetchBuku() async {
     var url = Uri.parse(
-        'https://10.0.2.2:8000/json/');
+        'http://localhost:8000/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
