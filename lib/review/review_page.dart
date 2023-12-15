@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:ancestralreads/review/review_models.dart';
 import 'package:http/http.dart' as http;
 import 'package:ancestralreads/left_drawer.dart';
@@ -39,12 +38,10 @@ class ReviewPage extends State<Review> {
 
     // final request = context.watch<CookieRequest>();
     Future<List<Ulasan>> fetchReview(request) async {
-      // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
       var response = await request.get(
-          'http://127.0.0.1:8000/review/json/',
+          'http://localhost:8000/review/json/',
           
       );
-
       // melakukan decode response menjadi bentuk json
       var data = response;
 
@@ -139,12 +136,12 @@ class ReviewPage extends State<Review> {
                         // tambah tombol delete
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Color.fromARGB(255, 180, 204, 176), // Change button color
+                            backgroundColor: const Color.fromARGB(255, 180, 204, 176), // Change button color
                           ),
                           child: const Text('Delete'),
                           onPressed: () async {
                             final url =
-                                Uri.parse('http://127.0.0.1:8000/review/delete-ajax/');
+                                Uri.parse('http://localhost:8000/review/delete-ajax/');
                             final response = await http.delete(url);
 
                             if (response.statusCode == 201) {

@@ -1,14 +1,13 @@
 import 'package:ancestralreads/authentication/login.dart';
-import 'package:ancestralreads/authentication/register.dart';
-import 'package:ancestralreads/review/review_form.dart';
 import 'package:flutter/material.dart';
 import 'package:ancestralreads/left_drawer.dart';
 import 'package:http/http.dart' as http;
 import 'package:ancestralreads/Kelola/Buku.dart';
 import 'dart:convert';
-import 'package:ancestralreads/main.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+
+import '../review/review_form.dart';
 
 class HomePage extends StatefulWidget {
   final String userName;
@@ -22,7 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomeState extends State<HomePage> {
   Future<List<Buku>> fetchBuku() async {
     var url = Uri.parse(
-        'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/json/');
+        'http://localhost:8000/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -70,7 +69,7 @@ class _HomeState extends State<HomePage> {
                   ),
                   onPressed: () async {
                     final response = await request.logout(
-                        "http://127.0.0.1:8000/auth/logout/");
+                        "http://localhost:8000/auth/logout/");
                     String message = response["message"];
                     if (response['status']) {
                       String uname = response["username"];
@@ -208,19 +207,33 @@ class _HomeState extends State<HomePage> {
                                     fontSize: 10,
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w400,
-                
                                   ),
                                 ),
-                                trailing: IconButton (
-                                  icon: Icon(Icons.reviews_outlined),
-                                  onPressed: () async {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ReviewFormPage(id:snapshot.data![index].pk, username: widget.userName),
-                                      )
-                                    );
-                                  }
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.bookmark_add_outlined),
+                                      onPressed: () async {
+                                        var data = jsonEncode({'pk': snapshot.data[index].pk});
+                                        await request.post(
+                                          'http://localhost:8000/booklist/add-book-flutter/',
+                                          data,
+                                        );
+                                      },
+                                    ),
+                                    IconButton (
+                                        icon: const Icon(Icons.reviews_outlined),
+                                        onPressed: () async {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => ReviewFormPage(id:snapshot.data![index].pk, username: widget.userName),
+                                              )
+                                          );
+                                        }
+                                    )
+                                  ],
                                 )
                               ),
                             )
