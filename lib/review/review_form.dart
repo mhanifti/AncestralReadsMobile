@@ -7,8 +7,9 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
 class ReviewFormPage extends StatefulWidget {
+    final String username;
     final int id;
-    const ReviewFormPage({super.key, required this.id});
+    const ReviewFormPage({super.key, required this.id, required this.username});
 
     @override
     State<ReviewFormPage> createState() => _ReviewFormPageState();
@@ -137,6 +138,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                                         final response = await request.postJson(
                                         "http://localhost:8000/review/create-flutter/",
                                         jsonEncode(<String, String>{
+                                            'username' : widget.username,
                                             'reviewer_name': _nama,
                                             'id_buku': widget.id.toString(),
                                             'rating': _rating.toString(),

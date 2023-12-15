@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomeState extends State<HomePage> {
   Future<List<Buku>> fetchBuku() async {
     var url = Uri.parse(
-        'http://127.0.0.1:8000/json/');
+        'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -217,7 +217,7 @@ class _HomeState extends State<HomePage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ReviewFormPage(id:snapshot.data![index].pk),
+                                        builder: (context) => ReviewFormPage(id:snapshot.data![index].pk, username: widget.userName),
                                       )
                                     );
                                   }
