@@ -1,7 +1,7 @@
 import 'package:ancestralreads/authentication/login.dart';
 import 'package:ancestralreads/authentication/register.dart';
 import 'package:ancestralreads/bookmarks/bookmarks_page.dart';
-import 'package:ancestralreads/menu.dart';
+import 'package:ancestralreads/Kelola/menu.dart';
 import 'package:ancestralreads/booklist/page/booklistpage.dart';
 import 'package:ancestralreads/guest.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +43,11 @@ class LeftDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.home_outlined),
-            title: const Text('Halaman Utama'),
+            title: const Text('Halaman Utama',
+            style: TextStyle(
+              color: Colors.white
+            ),
+            ),
             // Bagian redirection ke MyHomePage
             onTap: () {
               Navigator.pushReplacement(
@@ -55,8 +58,11 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.login),
-            title: const Text('Halaman Login'),
+            title: const Text('Halaman Login',
+            style: TextStyle(
+              color: Colors.white
+            ),
+            ),
             // Bagian redirection ke LoginApp
             onTap: () {
               Navigator.pushReplacement(
@@ -68,8 +74,11 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.app_registration),
-            title: const Text('Halaman Register'),
+            title: const Text('Halaman Register',
+            style: TextStyle(
+              color: Colors.white
+            ),
+            ),
             onTap: () {
               Navigator.pushReplacement(
                 context,
@@ -80,8 +89,11 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile( //left drawernya bookmarks
-            leading: const Icon(Icons.shopping_basket),
-            title: const Text('Bookmarks'),
+            title: const Text('Halaman Bookmarks',
+            style: TextStyle(
+              color: Colors.white
+            ),
+            ),
             onTap: () {
                 // Route menu ke halaman produk
                 Navigator.push(
@@ -91,8 +103,11 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.menu_book),
-            title: const Text('Halaman Booklist'),
+            title: const Text('Halaman Booklist',
+            style: TextStyle(
+              color: Colors.white
+            ),
+            ),
             onTap: () {
               Navigator.push(
                 context,

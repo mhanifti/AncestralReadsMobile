@@ -3,7 +3,8 @@ import 'package:ancestralreads/authentication/register.dart';
 import 'package:flutter/material.dart';
 import 'package:ancestralreads/left_drawer.dart';
 import 'package:http/http.dart' as http;
-import 'package:ancestralreads/Kelola/Buku.dart';
+import 'package:ancestralreads/Kelola/Buku.dart'; 
+import 'package:ancestralreads/bookmarks/models.dart'; 
 import 'dart:convert';
 import 'package:ancestralreads/main.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -21,7 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomeState extends State<HomePage> {
   Future<List<Buku>> fetchBuku() async {
     var url = Uri.parse(
-        'https://10.0.2.2:8000/json/');
+        'http://127.0.0.1:8000/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -69,7 +70,7 @@ class _HomeState extends State<HomePage> {
                   ),
                   onPressed: () async {
                     final response = await request.logout(
-                        "http://10.0.2.2:8000/auth/logout/");
+                        "http://127.0.0.1:8000/auth/logout/");
                     String message = response["message"];
                     if (response['status']) {
                       String uname = response["username"];
@@ -188,7 +189,7 @@ class _HomeState extends State<HomePage> {
                               ),
                               child: ListTile(
                                 tileColor: const Color(0xFFe5dfd2),
-                                leading: Text("${snapshot.data![index].fields.textNumber}"),
+                                leading: Text("${index+1}"),
                                 title: Text(
                                   "${snapshot.data![index].fields.title}.",
                                   style: const TextStyle(
@@ -209,7 +210,31 @@ class _HomeState extends State<HomePage> {
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
+                                trailing: IconButton( 
+                                  icon: Icon(Icons.bookmark_add_outlined),
+                                  onPressed: () async {
+                                  final response = await request.post(
+                                    'http://127.0.0.1:8000/bookmarks/add-bookmark/',
+                                    jsonEncode(<String, String>{
+                                      'bookId': '${index+1}'
+                                    })
+                                  );
+                                  if (response['status'] == 'ok') {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                    content: Text("Buku berhasil dibookmark!")
+                                    ));
+                                  } else {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                    content: Text("Buku sudah pernah dibookmark!")
+                                    ));
+                                  }
+                                },
+                                ),
+                                
                               ),
+                              
                             )
                         ),
                       );

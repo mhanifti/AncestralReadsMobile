@@ -37,7 +37,13 @@ class _BookmarksPageState extends State<BookmarksPage> {
   }
       return Scaffold(
           appBar: AppBar(
-          title: const Text('Bookmarks'),
+            backgroundColor: const Color(0xff144f36),
+            title: const Text('Halaman Bookmarks',
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Poppins'
+            )
+            ),
           ),
           drawer: const LeftDrawer(),
           body: FutureBuilder(
@@ -61,48 +67,55 @@ class _BookmarksPageState extends State<BookmarksPage> {
                     return ListView.builder(
                         itemCount: snapshot.data!.length,
                         itemBuilder: (_, index) => Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 30),
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                            "${snapshot.data![index].fields.title}",
-                            style: const TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                            ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text("${snapshot.data![index].fields.firstName} ${snapshot.data![index].fields.lastName}"),
-                            const SizedBox(height: 10),
-                            Text("${snapshot.data![index].fields.language}"),
-                            const SizedBox(height: 10),
-                            Text("${snapshot.data![index].fields.year}"),
-                            const SizedBox(height: 10),
-                            Text("${snapshot.data![index].fields.subjects}"),
-                            const SizedBox(height: 10),
-                            Text("${snapshot.data![index].fields.bookshelves}"),
-                            //tambah tombol delete
-                            const SizedBox(height: 10),
-                            ElevatedButton(
-                            child: const Text('Delete'),
-                            onPressed: () async {
-                              final url = Uri.parse('http://127.0.0.1:8000/bookmarks/delete-bookmark/');
-                              final response = await http.delete(url);
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFe5dfd2),
+                            borderRadius: BorderRadius.circular(15.0)
+                          ),
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 7),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6, vertical: 4
+                          ),
+                          child: ListTile(
+                                tileColor: const Color(0xFFe5dfd2),
+                                leading: Text("${index+1}"),
+                                title: Text(
+                                  "${snapshot.data![index].fields.title}.",
+                                  style: const TextStyle(
+                                      color: Color(0xff333333),
+                                      fontSize: 17,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w700,
+                                      overflow: TextOverflow.ellipsis
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  "${snapshot.data![index].fields.firstName} ${snapshot.data![index].fields.lastName}"
+                                      " | ${snapshot.data![index].fields.bookshelves} | ${snapshot.data![index].fields.year}",
+                                  style: const TextStyle(
+                                    color: Color(0xff333333),
+                                    fontSize: 10,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                trailing:IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () async {
+                                    Map data = {'pk':snapshot.data![index].pk};
+                                    final url = Uri.parse('http://127.0.0.1:8000/bookmarks/delete-bookmark/');
+                                    final response = await http.delete(
+                                      url,
+                                      headers: {"Content-Type": "application/json"}, 
+                                      body: jsonEncode(data));
 
-                              if (response.statusCode == 201) {
-                                setState(() {
-                                  snapshot.data!.removeAt(index);
-                                });
-                              } 
-                            },
-                            )
-
-
-                          ],
+                                    if (response.statusCode == 201) {
+                                      setState(() {
+                                        snapshot.data!.removeAt(index);
+                                      });
+                                    } 
+                                  },
+                                  )
                         ),
                       ),
                   );
