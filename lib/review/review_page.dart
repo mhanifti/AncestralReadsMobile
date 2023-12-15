@@ -1,3 +1,4 @@
+import 'package:ancestralreads/review/getTitle.dart';
 import 'package:ancestralreads/review/review_models.dart';
 import 'package:http/http.dart' as http;
 import 'package:ancestralreads/left_drawer.dart';
@@ -107,11 +108,13 @@ class ReviewPage extends State<Review> {
                       mainAxisAlignment: MainAxisAlignment.center, // Center vertically
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          "${snapshot.data![index].fields.buku}",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center, // Center horizontally
-                        ),
+                        FutureBuilder(future: getTitle(request, snapshot.data[index].fields.buku), builder: (context, AsyncSnapshot snapshot) {
+                          return Text(
+                            snapshot.data,
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center, // Center horizontally
+                          );
+                        }),
                         const SizedBox(height: 10),
                         Text(
                           "Reviewer: ${snapshot.data[index].fields.reviewerName}",
