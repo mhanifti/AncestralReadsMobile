@@ -35,7 +35,6 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
             backgroundColor: Colors.indigo,
             foregroundColor: Colors.white,
           ),
-          // TODO: Tambahkan drawer yang sudah dibuat di sini
           drawer: const LeftDrawer(),
           body: Form(
             key: _formKey,
@@ -77,7 +76,6 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                       ),
-                      // TODO: Tambahkan variabel yang sesuai
                       onChanged: (String? value) {
                         setState(() {
                           _rating = int.parse(value!);
@@ -106,7 +104,6 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                       ),
                       onChanged: (String? value) {
                         setState(() {
-                          // TODO: Tambahkan variabel yang sesuai
                           _deskripsi = value!;
                         });
                       },
@@ -133,7 +130,6 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                                 onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
                                         // Kirim ke Django dan tunggu respons
-                                        // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
                                         final response = await request.postJson(
                                         "http://localhost:8000/review/create-flutter/",
                                         jsonEncode(<String, String>{
@@ -142,7 +138,6 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                                             'id_buku': widget.id.toString(),
                                             'rating': _rating.toString(),
                                             'review_text': _deskripsi,
-                                            // TODO: Sesuaikan field data sesuai dengan aplikasimu
                                         }));
                                         if (response['status'] == 'success') {
                                              Navigator.pushReplacement(
