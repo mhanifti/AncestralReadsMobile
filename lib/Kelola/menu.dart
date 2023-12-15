@@ -7,6 +7,8 @@ import 'dart:convert';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
+import '../review/review_form.dart';
+
 class HomePage extends StatefulWidget {
   final String userName;
 
@@ -218,6 +220,17 @@ class _HomeState extends State<HomePage> {
                                           data,
                                         );
                                       },
+                                    ),
+                                    IconButton (
+                                        icon: Icon(Icons.reviews_outlined),
+                                        onPressed: () async {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => ReviewFormPage(id:snapshot.data![index].pk, username: widget.userName),
+                                              )
+                                          );
+                                        }
                                     )
                                   ],
                                 )
