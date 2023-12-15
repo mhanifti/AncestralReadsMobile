@@ -21,7 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomeState extends State<HomePage> {
   Future<List<Buku>> fetchBuku() async {
     var url = Uri.parse(
-        'http://localhost:8000/json/');
+        'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
