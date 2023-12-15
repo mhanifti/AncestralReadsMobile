@@ -58,7 +58,7 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Halaman Login',
+            title: const Text('Login',
             style: TextStyle(
               color: Colors.white
             ),
@@ -74,7 +74,7 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Halaman Register',
+            title: const Text('Register',
             style: TextStyle(
               color: Colors.white
             ),
@@ -89,7 +89,7 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile( //left drawernya bookmarks
-            title: const Text('Halaman Bookmarks',
+            title: const Text('Bookmarks',
             style: TextStyle(
               color: Colors.white
             ),
@@ -103,7 +103,7 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Halaman Booklist',
+            title: const Text('Booklist',
             style: TextStyle(
               color: Colors.white
             ),

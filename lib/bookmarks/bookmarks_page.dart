@@ -41,7 +41,8 @@ class _BookmarksPageState extends State<BookmarksPage> {
             title: const Text('Bookmarks',
             style: TextStyle(
               color: Colors.black,
-              fontFamily: 'Poppins'
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w700
             )
             ),
           ),
@@ -69,7 +70,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
                         itemBuilder: (_, index) => Container(
                           decoration: BoxDecoration(
                             color: const Color(0xFFe5dfd2),
-                            borderRadius: BorderRadius.circular(15.0)
+                            borderRadius: BorderRadius.circular(8.0)
                           ),
                           margin: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 7),
@@ -78,7 +79,14 @@ class _BookmarksPageState extends State<BookmarksPage> {
                           ),
                           child: ListTile(
                                 tileColor: const Color(0xFFe5dfd2),
-                                leading: Text("${index+1}"),
+                                leading: Text("${index+1}",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w700,
+                                  overflow: TextOverflow.ellipsis
+                                )
+                                ),
                                 title: Text(
                                   "${snapshot.data![index].fields.title}.",
                                   style: const TextStyle(
