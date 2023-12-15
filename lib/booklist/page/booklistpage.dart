@@ -23,7 +23,7 @@ class BooklistPage extends State<BookList> {
     final request = context.watch<CookieRequest>();
     Future<List<Book>> fetchBook() async {
       var response = await request.get(
-        'http://10.0.2.2:8000/booklist/get-book-ft/'
+        'http://127.0.0.1:8000/booklist/get-book-ft/'
       );
       var data = response;
       List<Book> listBook = [];

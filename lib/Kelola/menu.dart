@@ -1,5 +1,6 @@
 import 'package:ancestralreads/authentication/login.dart';
 import 'package:ancestralreads/authentication/register.dart';
+import 'package:ancestralreads/review/review_form.dart';
 import 'package:flutter/material.dart';
 import 'package:ancestralreads/left_drawer.dart';
 import 'package:http/http.dart' as http;
@@ -21,7 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomeState extends State<HomePage> {
   Future<List<Buku>> fetchBuku() async {
     var url = Uri.parse(
-        'https://10.0.2.2:8000/json/');
+        'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -69,7 +70,7 @@ class _HomeState extends State<HomePage> {
                   ),
                   onPressed: () async {
                     final response = await request.logout(
-                        "http://10.0.2.2:8000/auth/logout/");
+                        "http://127.0.0.1:8000/auth/logout/");
                     String message = response["message"];
                     if (response['status']) {
                       String uname = response["username"];
@@ -207,8 +208,20 @@ class _HomeState extends State<HomePage> {
                                     fontSize: 10,
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w400,
+                
                                   ),
                                 ),
+                                trailing: IconButton (
+                                  icon: Icon(Icons.reviews_outlined),
+                                  onPressed: () async {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ReviewFormPage(id:snapshot.data![index].pk, username: widget.userName),
+                                      )
+                                    );
+                                  }
+                                )
                               ),
                             )
                         ),

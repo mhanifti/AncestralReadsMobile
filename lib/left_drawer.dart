@@ -1,5 +1,6 @@
 import 'package:ancestralreads/authentication/login.dart';
 import 'package:ancestralreads/authentication/register.dart';
+import 'package:ancestralreads/review/review_page.dart';
 import 'package:ancestralreads/booklist/page/booklistpage.dart';
 import 'package:ancestralreads/guest.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +78,18 @@ class LeftDrawer extends StatelessWidget {
               );
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.app_registration),
+            title: const Text('Review'),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Review(),
+                  )
+                );
+              },
+            ),
           ListTile(
             leading: const Icon(Icons.menu_book),
             title: const Text('Halaman Booklist'),

@@ -17,7 +17,7 @@ class GuestPage extends StatefulWidget {
 class _GuestPageState extends State<GuestPage> {
   Future<List<Buku>> fetchBuku() async {
     var url = Uri.parse(
-        'https://10.0.2.2:8000/json/');
+        'http://127.0.0.1:8000/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -177,6 +177,7 @@ class _GuestPageState extends State<GuestPage> {
                               child: ListTile(
                                 tileColor: const Color(0xFFe5dfd2),
                                 leading: Text("${snapshot.data![index].fields.textNumber}"),
+                                //${snapshot.data![index].pk}
                                 title: Text(
                                     "${snapshot.data![index].fields.title}.",
                                     style: const TextStyle(
