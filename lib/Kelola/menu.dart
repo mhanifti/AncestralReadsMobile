@@ -1,11 +1,9 @@
 import 'package:ancestralreads/authentication/login.dart';
-import 'package:ancestralreads/authentication/register.dart';
 import 'package:flutter/material.dart';
 import 'package:ancestralreads/left_drawer.dart';
 import 'package:http/http.dart' as http;
 import 'package:ancestralreads/Kelola/Buku.dart';
 import 'dart:convert';
-import 'package:ancestralreads/main.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomeState extends State<HomePage> {
   Future<List<Buku>> fetchBuku() async {
     var url = Uri.parse(
-        'http://localhost:8000/json/');
+        'http://10.0.2.2:8000/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -69,7 +67,7 @@ class _HomeState extends State<HomePage> {
                   ),
                   onPressed: () async {
                     final response = await request.logout(
-                        "http://localhost:8000/auth/logout/");
+                        "http://10.0.2.2:8000/auth/logout/");
                     String message = response["message"];
                     if (response['status']) {
                       String uname = response["username"];
@@ -209,6 +207,20 @@ class _HomeState extends State<HomePage> {
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
+                                trailing: Column(
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(Icons.add),
+                                      onPressed: () async {
+                                        var data = jsonEncode({'pk': snapshot.data[index].pk});
+                                        await request.post(
+                                          'http://10.0.2.2:8000/booklist/add-book-flutter/',
+                                          data,
+                                        );
+                                      },
+                                    )
+                                  ],
+                                )
                               ),
                             )
                         ),

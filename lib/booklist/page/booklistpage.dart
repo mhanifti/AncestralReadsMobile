@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'package:ancestralreads/booklist/page/bookaddpage.dart';
 import 'package:ancestralreads/left_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-
 import '../api/fetchBook.dart';
 
 class BookList extends StatefulWidget {
@@ -83,11 +81,15 @@ class BooklistPage extends State<BookList> {
                                           ),
                                       ),
                                       SizedBox(height: 4), // Add some space between the title and the details
-                                      Text(
-                                        '${snapshot.data?[index].fields.firstName} | '
-                                            '${snapshot.data?[index].fields.bookshelves} | '
-                                            '${snapshot.data?[index].fields.year}',
-                                        style: const TextStyle(fontSize: 10),
+                                      Container(
+                                        width: 300,
+                                        child: Text(
+                                          '${snapshot.data?[index].fields.firstName} | '
+                                              '${snapshot.data?[index].fields.bookshelves} | '
+                                              '${snapshot.data?[index].fields.year}',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(fontSize: 10),
+                                        )
                                       ),
                                     ],
                                   ),
@@ -103,7 +105,7 @@ class BooklistPage extends State<BookList> {
                               icon: Icon(Icons.delete),
                               onPressed: () async {
                                 final response = await request.postJson(
-                                    'http://localhost:8000/booklist/delete-book-flutter/',
+                                    'http://10.0.2.2:8000/booklist/delete-book-flutter/',
                                     jsonEncode(<String, int>{
                                       'pk': snapshot.data[index].pk,
                                     }));
@@ -124,24 +126,6 @@ class BooklistPage extends State<BookList> {
             }
           }
         },
-      ),
-      floatingActionButton: Ink(
-        decoration: const ShapeDecoration(
-          color: Color.fromRGBO(20, 79, 54, 100.0),
-          shape: CircleBorder(),
-        ),
-        child: IconButton(
-          hoverColor: Colors.cyan,
-          icon: const Icon(Icons.add),
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const BookAdd(),
-                )
-            );
-          },
-        ),
       ),
     );
   }

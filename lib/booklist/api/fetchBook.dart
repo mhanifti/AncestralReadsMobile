@@ -2,7 +2,7 @@ import "../model/Book.dart";
 
 Future<List<Book>> fetchBook(request) async {
   var response = await request.get(
-      'http://localhost:8000/booklist/get-book/'
+      'http://10.0.2.2:8000/booklist/get-book/'
   );
   var data = response;
   List<Book> listBook = [];
