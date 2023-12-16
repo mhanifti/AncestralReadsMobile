@@ -118,6 +118,18 @@ class BooklistPage extends State<BookList> {
                                       'pk': snapshot.data[index].pk,
                                     }));
                                 if (response['status'] == 'success') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                      content: Text("Buku telah dihapus!")
+                                  ));
+                                  setState(() {
+                                    BooklistPage();
+                                  });
+                                } else if (response['status'] == 'not found') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                      content: Text("Buku sudah terhapus sebelumnya!")
+                                  ));
                                   setState(() {
                                     BooklistPage();
                                   });
