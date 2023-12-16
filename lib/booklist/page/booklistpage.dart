@@ -8,9 +8,8 @@ import 'package:provider/provider.dart';
 import '../api/fetchBook.dart';
 
 class BookList extends StatefulWidget {
-  const BookList({
-    Key? key,
-  }) : super(key: key);
+  final String username;
+  const BookList({Key? key, required this.username}) : super(key: key);
 
   @override
   State<BookList> createState() => BooklistPage();
@@ -38,7 +37,7 @@ class BooklistPage extends State<BookList> {
         backgroundColor: Color.fromRGBO(137, 130, 114, 100.0),
         foregroundColor: Colors.black,
       ),
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer(username: widget.username),
       body: FutureBuilder(
         future: fetchBook(request),
         builder: (context, AsyncSnapshot snapshot) {

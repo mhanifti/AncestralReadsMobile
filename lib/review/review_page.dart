@@ -10,9 +10,8 @@ import 'package:provider/provider.dart';
 
 
 class Review extends StatefulWidget {
-  const Review({
-    Key? key,
-  }) : super(key: key);
+  final String username;
+  const Review({Key? key, required this.username}) : super(key: key);
 
   @override
   State<Review> createState() => ReviewPage();
@@ -42,7 +41,7 @@ class ReviewPage extends State<Review> {
     // final request = context.watch<CookieRequest>();
     Future<List<Ulasan>> fetchReview(request) async {
       var response = await request.get(
-          'http://localhost:8000/review/json/',
+          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/review/json/',
           
       );
       // melakukan decode response menjadi bentuk json
@@ -82,7 +81,7 @@ class ReviewPage extends State<Review> {
         
       ),
       
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer(username: widget.username),
       body: FutureBuilder(
         future: fetchReview(request),
         builder: (context, AsyncSnapshot snapshot) {
