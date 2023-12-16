@@ -216,10 +216,26 @@ class _HomeState extends State<HomePage> {
                                       icon: const Icon(Icons.bookmark_add_outlined),
                                       onPressed: () async {
                                         var data = jsonEncode({'pk': snapshot.data![index].pk});
-                                        await request.post(
+                                        final response = await request.post(
                                           'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/booklist/add-book-flutter/',
                                           data,
                                         );
+                                        if (response['status'] == 'success') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                              content: Text("Buku berhasil ditambah ke booklist!")
+                                          ));
+                                        } else if (response['status'] == 'duplicate') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                              content: Text("Buku sudah ada dalam booklist anda!")
+                                          ));
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                              content: Text("Terjadi error saat penambahan buku")
+                                          ));
+                                        }
                                       },
                                     ),
                                     IconButton (

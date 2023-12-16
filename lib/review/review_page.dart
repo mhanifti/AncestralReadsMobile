@@ -43,7 +43,7 @@ class ReviewPage extends State<Review> {
     // final request = context.watch<CookieRequest>();
     Future<List<Ulasan>> fetchReview(request) async {
       var response = await request.get(
-          'http://localhost:8000/review/json/',
+          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/review/json/',
           
       );
       // melakukan decode response menjadi bentuk json
@@ -198,7 +198,7 @@ class ReviewPage extends State<Review> {
                                 onPressed: () async {
                                   Map data = {'pk':snapshot.data![index].pk};
                                   final url =
-                                      Uri.parse('http://127.0.0.1:8000/review/delete-ajax/');
+                                      Uri.parse('https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/review/delete-ajax/');
                                   final response = await http.delete(url,
                                   headers: {"Content-Type": "application/json"},
                                   body: jsonEncode(data));

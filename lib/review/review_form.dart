@@ -139,7 +139,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                                     if (_formKey.currentState!.validate()) {
                                         // Kirim ke Django dan tunggu respons
                                         final response = await request.postJson(
-                                        "http://localhost:8000/review/create-flutter/",
+                                        "https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/review/create-flutter/",
                                         jsonEncode(<String, String>{
                                             'username' : widget.username,
                                             'reviewer_name': _nama,
