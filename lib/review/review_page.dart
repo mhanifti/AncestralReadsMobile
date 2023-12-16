@@ -18,7 +18,7 @@ class Review extends StatefulWidget {
   State<Review> createState() => ReviewPage();
 }
 
-class StarRating extends StatelessWidget {
+class StarRating extends StatelessWidget{
   final int rating;
 
   StarRating({required this.rating});
@@ -38,6 +38,7 @@ class StarRating extends StatelessWidget {
 
 
 class ReviewPage extends State<Review> {
+  double? _selectedRating;
 
     // final request = context.watch<CookieRequest>();
     Future<List<Ulasan>> fetchReview(request) async {
@@ -51,12 +52,19 @@ class ReviewPage extends State<Review> {
       // melakukan konversi data json menjadi object Product
       List<Ulasan> listReview = [];
       for (var d in data) {
-          if (d != null) {
-              listReview.add(Ulasan.fromJson(d));
+        if (d != null) {
+          Ulasan review = Ulasan.fromJson(d);
+          if (_selectedRating == null || review.fields.rating == _selectedRating) {
+            listReview.add(review);
           }
+        }
       }
-      return listReview;
 
+    // Sorting rating list
+    listReview.sort((a, b) => a.fields.rating.compareTo(b.fields.rating));
+
+    return listReview;
+    
 
   }
 
@@ -83,93 +91,137 @@ class ReviewPage extends State<Review> {
       ),
       
       drawer: const LeftDrawer(),
-      body: FutureBuilder(
-        future: fetchReview(request),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.data == null) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            if (!snapshot.hasData) {
-              return const Column(
-                children: [
-                  Text(
-                    "Belum ada buku yang di-Review.",
-                    style: TextStyle(color: Color.fromARGB(255, 14, 14, 14), fontSize: 20),
-                  ),
-                  SizedBox(height: 8),
-                ],
-              );
-            } else {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (_, index) => Card(
-                  color: Color.fromARGB(255, 211, 210, 183),
-                  elevation: 5,
-                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center, // Center vertically
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        FutureBuilder(future: getTitle(request, snapshot.data[index].fields.buku), builder: (context, AsyncSnapshot snapshot) {
-                          return Text(
-                            snapshot.data,
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center, // Center horizontally
-                          );
-                        }),
-                        const SizedBox(height: 10),
-                        Text(
-                          "Reviewer: ${snapshot.data[index].fields.reviewerName}",
-                          style: TextStyle(color: Colors.grey),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          "${snapshot.data![index].fields.reviewText}",
-                          style: TextStyle(fontSize: 16),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 10),
-                        StarRating(rating: snapshot.data![index].fields.rating),
-                        const SizedBox(height: 10),
-                        Text(
-                          "Date: ${snapshot.data![index].fields.reviewDate}",
-                          style: TextStyle(color: Colors.grey),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 10),
-                        // tambah tombol delete
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 180, 204, 176), // Change button color
-                          ),
-                          child: const Text('Delete'),
-                          onPressed: () async {
-                            Map data = {'pk':snapshot.data![index].pk};
-                            final url =
-                                Uri.parse('http://127.0.0.1:8000/review/delete-ajax/');
-                            final response = await http.delete(url,
-                             headers: {"Content-Type": "application/json"},
-                             body: jsonEncode(data));
-
-                            if (response.statusCode == 201) {
-                              setState(() {
-                                snapshot.data!.removeAt(index);
-                              });
-                            }
-                          },
-                        ),
-                      ],
-                    ),
+      body: Column(
+        children: [
+          // Filter Section
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Text('Filter Rating: ${_selectedRating ?? "All"}'),
+                Flexible(
+                  child: Slider(
+                    value: _selectedRating ?? 1,
+                    min: 1,
+                    max: 5,
+                    divisions: 4,
+                    label: 'Selected Rating: ${_selectedRating ?? "All"}',
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedRating = value;
+                      });
+                    },
+                    activeColor: Color.fromARGB(255, 86, 88, 90),
                   ),
                 ),
-              );
-            }
-          }
-        },
-      ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Fungsi untuk menghapus filter
+                    setState(() {
+                      _selectedRating = null;
+                    });
+                  },
+                  child: Text('Clear Filter', style: TextStyle(color: Colors.white),),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(255, 95, 88, 88), // Ganti warna tombol di sini
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Review List
+          Expanded(
+            child:
+            FutureBuilder(
+              future: fetchReview(request),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.data == null) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  if (!snapshot.hasData) {
+                    return const Column(
+                      children: [
+                        Text(
+                          "Belum ada buku yang di-Review.",
+                          style: TextStyle(color: Color.fromARGB(255, 14, 14, 14), fontSize: 20),
+                        ),
+                        SizedBox(height: 8),
+                      ],
+                    );
+                  } else {
+                    return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (_, index) => Card(
+                        color: Color.fromARGB(255, 211, 210, 183),
+                        elevation: 5,
+                        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center, // Center vertically
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              FutureBuilder(future: getTitle(request, snapshot.data[index].fields.buku), builder: (context, AsyncSnapshot snapshot) {
+                                return Text(
+                                  snapshot.data,
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center, // Center horizontally
+                                );
+                              }),
+                              const SizedBox(height: 10),
+                              Text(
+                                "Reviewer: ${snapshot.data[index].fields.reviewerName}",
+                                style: TextStyle(color: Colors.grey),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                "${snapshot.data![index].fields.reviewText}",
+                                style: TextStyle(fontSize: 16),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 10),
+                              StarRating(rating: snapshot.data![index].fields.rating),
+                              const SizedBox(height: 10),
+                              Text(
+                                "Date: ${snapshot.data![index].fields.reviewDate}",
+                                style: TextStyle(color: Colors.grey),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 10),
+                              // tambah tombol delete
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 180, 204, 176), // Change button color
+                                ),
+                                child: const Text('Delete'),
+                                onPressed: () async {
+                                  Map data = {'pk':snapshot.data![index].pk};
+                                  final url =
+                                      Uri.parse('http://127.0.0.1:8000/review/delete-ajax/');
+                                  final response = await http.delete(url,
+                                  headers: {"Content-Type": "application/json"},
+                                  body: jsonEncode(data));
+
+                                  if (response.statusCode == 201) {
+                                    setState(() {
+                                      snapshot.data!.removeAt(index);
+                                    });
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                }
+              },
+            ),
+          )
+        ]
+      )
     );
   }
 }

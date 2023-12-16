@@ -65,7 +65,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                       },
                     ),
                   ),
-             
+                                   
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
@@ -78,20 +78,28 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                       ),
                       onChanged: (String? value) {
                         setState(() {
-                          _rating = int.parse(value!);
+                          _rating = int.tryParse(value ?? "")!;
                         });
                       },
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
                           return "Rating tidak boleh kosong!";
                         }
-                        if (int.tryParse(value) == null) {
+
+                        int? rating = int.tryParse(value);
+                        if (rating == null) {
                           return "Rating harus berupa angka!";
                         }
+
+                        if (rating <= 0 || rating > 5) {
+                          return "Rating harus antara 1 dan 5!";
+                        }
+
                         return null;
                       },
                     ),
                   ),
+
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
