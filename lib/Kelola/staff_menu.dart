@@ -848,8 +848,11 @@ class _LibrarianState extends State<LibrarianPage> {
                                           size: 20,
                                         ),
                                         onPressed: () async {
-                                          final response = await request.(
-                                              "http://localhost:8000/hapus-flutter/${snapshot.data![index].pk}","");
+                                          final response = await request.postJson(
+                                              "http://localhost:8000/hapus-flutter/",
+                                              jsonEncode(<String, int>{
+                                                'pk': snapshot.data![index].pk,
+                                              }));
                                           if (response["status"] == "success") {
                                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                               content: Text("buku telah berhasil dihapus."),
