@@ -102,7 +102,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
                             icon: Icon(Icons.delete),
                             onPressed: () async {
                               Map data = {'pk':snapshot.data![index].pk};
-                              final url = Uri.parse('http://localhost:8000/bookmarks/delete-bookmark/');
+                              final url = Uri.parse('https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/bookmarks/delete-bookmark/');
                               final response = await http.delete(
                                   url,
                                   headers: {"Content-Type": "application/json"},

@@ -57,19 +57,19 @@ class _HomeState extends State<HomePage> {
             backgroundColor: const Color(0xffffffff),
             scrollable: true,
             title: const Text(
-              "Data buku baru",
+              "Form Tambah Review",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w600,
-                height: 0.10,
               ),
             ),
             content: Form(
               key: _formKey3,
               child: SingleChildScrollView(
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -114,9 +114,16 @@ class _HomeState extends State<HomePage> {
                             if (value == null || value.isEmpty) {
                               return "Rating tidak boleh kosong!";
                             }
-                            if (int.tryParse(value) == null) {
+
+                            int? rating = int.tryParse(value);
+                            if (rating == null) {
                               return "Rating harus berupa angka!";
                             }
+
+                            if (rating <= 0 || rating > 5) {
+                              return "Rating harus antara 1 dan 5!";
+                            }
+
                             return null;
                           },
                         ),
@@ -150,7 +157,7 @@ class _HomeState extends State<HomePage> {
             ),
             actions: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
@@ -393,10 +400,26 @@ class _HomeState extends State<HomePage> {
                                       icon: const Icon(Icons.bookmark_add_outlined),
                                       onPressed: () async {
                                         var data = jsonEncode({'pk': snapshot.data![index].pk});
-                                        await request.post(
+                                        final response = await request.post(
                                           'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/booklist/add-book-flutter/',
                                           data,
                                         );
+                                        if (response['status'] == 'success') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                              content: Text("Buku berhasil ditambah ke booklist!")
+                                          ));
+                                        } else if (response['status'] == 'duplicate') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                              content: Text("Buku sudah ada dalam booklist anda!")
+                                          ));
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                              content: Text("Terjadi error saat penambahan buku")
+                                          ));
+                                        }
                                       },
                                     ),
                                     IconButton (
