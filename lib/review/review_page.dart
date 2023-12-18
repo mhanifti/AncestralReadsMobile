@@ -242,13 +242,24 @@ class ReviewPage extends State<Review> {
                             mainAxisAlignment: MainAxisAlignment.center, // Center vertically
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              FutureBuilder(future: getTitle(request, snapshot.data[index].fields.buku), builder: (context, AsyncSnapshot snapshot) {
-                                return Text(
-                                  snapshot.data,
-                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center, // Center horizontally
-                                );
-                              }),
+                              FutureBuilder(
+                              future: getTitle(request, snapshot.data[index].fields.buku),
+                              builder: (context, AsyncSnapshot<String?> snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return CircularProgressIndicator(); // atau indikator loading lainnya
+                                } else if (snapshot.hasError) {
+                                  return Text("Error: ${snapshot.error}");
+                                } else if (snapshot.data == null) {
+                                  return Text("Data kosong"); // Tangani kasus ketika data null
+                                } else {
+                                  return Text(
+                                    snapshot.data!,
+                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  );
+                                }
+                              },
+                            ),
                               const SizedBox(height: 10),
                               Text(
                                 "Reviewer: ${snapshot.data[index].fields.reviewerName}",
