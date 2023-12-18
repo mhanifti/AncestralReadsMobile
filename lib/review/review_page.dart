@@ -161,6 +161,7 @@ class ReviewPage extends State<Review> {
                             mainAxisAlignment: MainAxisAlignment.center, // Center vertically
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+
                               FutureBuilder(
                               future: getTitle(request, snapshot.data[index].fields.buku),
                               builder: (context, AsyncSnapshot<String?> snapshot) {
@@ -179,6 +180,7 @@ class ReviewPage extends State<Review> {
                                 }
                               },
                             ),
+                            
                               const SizedBox(height: 10),
                               Text(
                                 "Reviewer: ${snapshot.data[index].fields.reviewerName}",
