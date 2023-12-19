@@ -27,13 +27,14 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
         final request = context.watch<CookieRequest>();
         return Scaffold(
           appBar: AppBar(
-            title: const Center(
-              child: Text(
-                'Form Tambah Review',
-              ),
+            backgroundColor: const Color(0xff898272),
+            title: const Text('Add Book Review',
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w700
+            )
             ),
-            backgroundColor: Colors.indigo,
-            foregroundColor: Colors.white,
           ),
           drawer: const LeftDrawer(),
           body: Form(
@@ -46,10 +47,19 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
                         hintText: "Nama Reviewer",
                         labelText: "Nama Reviewer",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(color: Color(0xff144F36), width: 2.0),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 2.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xff144F36), width: 2.0),
                         ),
                       ),
                       onChanged: (String? value) {
@@ -74,6 +84,13 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                         labelText: "Rating",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(color: Color(0xff144F36), width: 2.0),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 2.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xff144F36), width: 2.0),
                         ),
                       ),
                       onChanged: (String? value) {
@@ -108,6 +125,13 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                         labelText: "Deskripsi",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(color: Color(0xff144F36), width: 2.0),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 2.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xff144F36), width: 2.0),
                         ),
                       ),
                       onChanged: (String? value) {
@@ -180,77 +204,4 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
       }
   }
 
-// import 'package:flutter/material.dart';
 
-// class AddReviewForm extends StatefulWidget {
-//   @override
-//   _AddReviewFormState createState() => _AddReviewFormState();
-// }
-
-// class _AddReviewFormState extends State<AddReviewForm> {
-//   final TextEditingController reviewerNameController = TextEditingController();
-//   final TextEditingController reviewTextController = TextEditingController();
-//   final TextEditingController ratingController = TextEditingController();
-
-//  void addReview() async {
-//   final response = await http.post(
-//     Uri.parse('http://127.0.0.1:8000/create-review-ajax/'),
-//     body: {
-//       'reviewer_name': reviewerNameController.text,
-//       'review_text': reviewTextController.text,
-//       'rating': ratingController.text,
-//       'buku': selectedBookId, // Sesuaikan dengan cara Anda mendapatkan ID buku yang dipilih
-//     },
-//   );
-
-//   if (response.statusCode == 201) {
-//     // Review berhasil ditambahkan
-//     print('Review added successfully');
-    
-//     // Kembali ke halaman sebelumnya
-//     Navigator.pop(context);
-//   } else {
-//     // Gagal menambahkan review, Anda dapat menangani error sesuai kebutuhan
-//     print('Failed to add review');
-//     // Tampilkan pesan error atau ambil tindakan lain yang sesuai
-//   }
-// }
-
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Add Review'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           children: [
-//             TextField(
-//               controller: reviewerNameController,
-//               decoration: InputDecoration(labelText: 'Reviewer Name'),
-//             ),
-//             SizedBox(height: 16.0),
-//             TextField(
-//               controller: reviewTextController,
-//               decoration: InputDecoration(labelText: 'Review Text'),
-//             ),
-//             SizedBox(height: 16.0),
-//             TextField(
-//               controller: ratingController,
-//               decoration: InputDecoration(labelText: 'Rating'),
-//             ),
-//             SizedBox(height: 16.0),
-//             ElevatedButton(
-//               onPressed: () {
-//                 addReview();
-//               },
-//               child: Text('Add Review'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
