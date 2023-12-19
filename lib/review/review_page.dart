@@ -243,12 +243,15 @@ class ReviewPage extends State<Review> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               FutureBuilder(future: getTitle(request, snapshot.data[index].fields.buku), builder: (context, AsyncSnapshot snapshot) {
-                                return Text(
-                                  snapshot.data,
-                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center, // Center horizontally
+                                if (snapshot.data == null) {
+                                  return const Center(child: CircularProgressIndicator());
+                                } else {
+                                  return Text(
+                                    snapshot.data,
+                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center, // Center horizontally
                                 );
-                              }),
+                              }}),
                               const SizedBox(height: 10),
                               Text(
                                 "Reviewer: ${snapshot.data[index].fields.reviewerName}",

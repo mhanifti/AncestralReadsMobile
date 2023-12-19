@@ -27,6 +27,7 @@ class _GuestPageState extends State<GuestPage> {
     // melakukan konversi data json menjadi object Product
     List<Buku> list_buku = [];
     for (var d in data) {
+      //print(d);
       if (d != null) {
         list_buku.add(Buku.fromJson(d));
       }
