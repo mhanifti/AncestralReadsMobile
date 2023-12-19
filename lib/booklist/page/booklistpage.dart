@@ -1,11 +1,13 @@
+// Import External
 import 'dart:convert';
-
-import 'package:ancestralreads/left_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
+// Import Internal
+import 'package:ancestralreads/left_drawer.dart';
 import '../api/fetchBook.dart';
+import '../page/bookaddpage.dart';
 
 class BookList extends StatefulWidget {
   const BookList({
@@ -17,7 +19,7 @@ class BookList extends StatefulWidget {
 }
 
 class BooklistPage extends State<BookList> {
-
+  int count = 1;
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
@@ -59,92 +61,72 @@ class BooklistPage extends State<BookList> {
                 itemBuilder: (_, index) => Padding(
                   padding: const EdgeInsetsDirectional.all(8),
                   child: Container(
-                    height: 80.0,
                     decoration: BoxDecoration(
                       color: const Color.fromRGBO(229, 223, 210, 100.0),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.all(5),
-                          child: Align(
-                            alignment: AlignmentDirectional.centerStart,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.only(start: 25.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        width: 300,
-                                        child: Text(
-                                          '${snapshot.data?[index].fields.title}',
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(fontSize: 16),
-                                        ),
-                                      ),
-                                      SizedBox(height: 4), // Add some space between the title and the details
-                                      Container(
-                                        width: 300,
-                                          child: Text(
-                                            '${snapshot.data?[index].fields.firstName} | '
-                                                '${snapshot.data?[index].fields.bookshelves} | '
-                                                '${snapshot.data?[index].fields.year}',
-                                            style: const TextStyle(fontSize: 10),
-                                            overflow: TextOverflow.ellipsis,
-                                        )
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: AlignmentDirectional.centerEnd,
-                            child: IconButton(
-                              icon: Icon(Icons.delete),
-                              onPressed: () async {
-                                final response = await request.postJson(
-                                    'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/booklist/delete-book-flutter/',
-                                    jsonEncode(<String, int>{
-                                      'pk': snapshot.data[index].pk,
-                                    }));
-                                if (response['status'] == 'success') {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                      content: Text("Buku telah dihapus!")
-                                  ));
-                                  setState(() {
-                                    BooklistPage();
-                                  });
-                                } else if (response['status'] == 'not found') {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                      content: Text("Buku sudah terhapus sebelumnya!")
-                                  ));
-                                  setState(() {
-                                    BooklistPage();
-                                  });
-                                }
-                              },
-                            ),
-                          ),
-                        )
-                      ],
+                    child: ListTile(
+                      leading: Text('${count++}'),
+                      title: Text(
+                        '${snapshot.data?[index].fields.title}',
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      subtitle: Text(
+                        '${snapshot.data?[index].fields.firstName} | '
+                            '${snapshot.data?[index].fields.bookshelves} | '
+                            '${snapshot.data?[index].fields.year}',
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 10),
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () async {
+                          final response = await request.postJson(
+                              'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/booklist/delete-book-flutter/',
+                              jsonEncode(<String, int>{
+                                'pk': snapshot.data[index].pk,
+                              }));
+                          if (response['status'] == 'success') {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                                content: Text("Buku telah dihapus!"),
+                                duration: Duration(seconds: 1),
+                            ));
+                            setState(() {
+                              BooklistPage();
+                            });
+                          } else if (response['status'] == 'not found') {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                                content: Text("Buku sudah terhapus sebelumnya!"),
+                                duration: Duration(seconds: 1),
+                            ));
+                            setState(() {
+                              BooklistPage();
+                            });
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ),
               );
             }
           }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(
+          Icons.add,
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+              MaterialPageRoute(
+                builder: (context) => const BookAdd(),
+              )
+          );
         },
       ),
     );

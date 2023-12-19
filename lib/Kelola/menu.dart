@@ -212,32 +212,6 @@ class _HomeState extends State<HomePage> {
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.bookmark_add_outlined),
-                                      onPressed: () async {
-                                        var data = jsonEncode({'pk': snapshot.data![index].pk});
-                                        final response = await request.post(
-                                          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/booklist/add-book-flutter/',
-                                          data,
-                                        );
-                                        if (response['status'] == 'success') {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                              content: Text("Buku berhasil ditambah ke booklist!")
-                                          ));
-                                        } else if (response['status'] == 'duplicate') {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                              content: Text("Buku sudah ada dalam booklist anda!")
-                                          ));
-                                        } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                              content: Text("Terjadi error saat penambahan buku")
-                                          ));
-                                        }
-                                      },
-                                    ),
                                     IconButton (
                                         icon: const Icon(Icons.reviews_outlined),
                                         onPressed: () async {
@@ -260,12 +234,14 @@ class _HomeState extends State<HomePage> {
                                         if (response['status'] == 'ok') {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(const SnackBar(
-                                              content: Text("Buku berhasil ditambah ke bookmark!")
+                                              content: Text("Buku berhasil ditambah ke bookmark!"),
+                                              duration: Duration(seconds: 1),
                                           ));
                                         } else {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(const SnackBar(
-                                              content: Text("Buku sudah pernah ditambah ke bookmark!")
+                                              content: Text("Buku sudah pernah ditambah ke bookmark!"),
+                                              duration: Duration(seconds: 1),
                                           ));
                                         }
                                       },
