@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -63,7 +62,7 @@ class _FormRegister extends State<RegisterForm> {
       key: formKey,
       child: SingleChildScrollView(
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
@@ -86,8 +85,8 @@ class _FormRegister extends State<RegisterForm> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text(
                   "Register",
                   textAlign: TextAlign.left,
@@ -186,7 +185,7 @@ class _FormRegister extends State<RegisterForm> {
                     ),
                     onPressed: () async {
                       final response = await request.post(
-                          'http://127.0.0.1:8000/auth/register/',
+                          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/auth/register/',
                           {
                             "username": username,
                             "password1": password,
@@ -227,7 +226,7 @@ class _FormRegister extends State<RegisterForm> {
                     ),
                     onPressed: () async {
                       final response = await request.post(
-                          'http://127.0.0.1:8000/auth/register/',
+                          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/auth/register/',
                           {
                             "username": username,
                             "password1": password,

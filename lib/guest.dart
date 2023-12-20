@@ -1,11 +1,9 @@
 import 'package:ancestralreads/authentication/login.dart';
 import 'package:ancestralreads/authentication/register.dart';
 import 'package:flutter/material.dart';
-import 'package:ancestralreads/left_drawer.dart';
 import 'package:http/http.dart' as http;
-import 'package:ancestralreads/Kelola/Buku.dart';
+import 'package:ancestralreads/Kelola/buku.dart';
 import 'dart:convert';
-import 'package:ancestralreads/main.dart';
 
 class GuestPage extends StatefulWidget {
   const GuestPage({Key? key}) : super(key: key);
@@ -17,7 +15,7 @@ class GuestPage extends StatefulWidget {
 class _GuestPageState extends State<GuestPage> {
   Future<List<Buku>> fetchBuku() async {
     var url = Uri.parse(
-        'http://127.0.0.1:8000/json/');
+        'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -43,6 +41,18 @@ class _GuestPageState extends State<GuestPage> {
         surfaceTintColor: const Color(0xff898272),
         backgroundColor: const Color(0xff898272),
         actions: <Widget> [
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.0),
+            child: Text("Guest Page",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+                height: 0.10,
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: FilledButton(
@@ -176,7 +186,8 @@ class _GuestPageState extends State<GuestPage> {
                               ),
                               child: ListTile(
                                 tileColor: const Color(0xFFe5dfd2),
-                                leading: Text("${index+1}"),
+                                leading: Text("${snapshot.data![index].fields.textNumber}"),
+                                //${snapshot.data![index].pk}
                                 title: Text(
                                     "${snapshot.data![index].fields.title}.",
                                     style: const TextStyle(

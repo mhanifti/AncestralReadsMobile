@@ -1,4 +1,3 @@
-// import 'package:ancestralreads/bookmarks/api/fetchBook.dart';
 import 'package:ancestralreads/bookmarks/product_detail.page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -9,20 +8,21 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
 class BookmarksPage extends StatefulWidget {
-    const BookmarksPage({Key? key}) : super(key: key);
+  final String username;
+  const BookmarksPage({Key? key, required this.username}) : super(key: key);
 
-    @override
-    _BookmarksPageState createState() => _BookmarksPageState();
+  @override
+  _BookmarksPageState createState() => _BookmarksPageState();
 }
 
 class _BookmarksPageState extends State<BookmarksPage> {
   @override
   Widget build(BuildContext context) {
-    final request = context.watch<CookieRequest>(); 
-     Future<List<Product>> fetchBook() async {
+    final request = context.watch<CookieRequest>();
+    Future<List<Product>> fetchBook() async {
 
       var response = await request.get(
-        'http://127.0.0.1:8000/bookmarks/get-bookmark/'
+          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/bookmarks/get-bookmark/'
       );
       var data = response;
 
@@ -111,7 +111,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
                                   icon: Icon(Icons.delete),
                                   onPressed: () async {
                                     Map data = {'pk':snapshot.data![index].pk};
-                                    final url = Uri.parse('http://127.0.0.1:8000/bookmarks/delete-bookmark/');
+                                    final url = Uri.parse('https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/bookmarks/delete-bookmark/');
                                     final response = await http.delete(
                                       url,
                                       headers: {"Content-Type": "application/json"}, 

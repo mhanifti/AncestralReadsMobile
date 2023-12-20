@@ -3,6 +3,7 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:ancestralreads/guest.dart';
 import 'package:ancestralreads/Kelola/menu.dart';
+import 'package:ancestralreads/Kelola/staff_menu.dart';
 class LoginApp extends StatelessWidget {
   const LoginApp({super.key});
 
@@ -60,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () async {
                 String username = _usernameController.text;
                 String password = _passwordController.text;
-                final response = await request.login("http://127.0.0.1:8000/auth/login/", {
+                final response = await request.login("https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/auth/login/", {
                   'username': username,
                   'password': password,
                 });
@@ -71,8 +72,8 @@ class _LoginPageState extends State<LoginPage> {
                     String uname = response['username'];
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => GuestPage()),
-                    );
+                      MaterialPageRoute(builder: (context) => LibrarianPage(username: uname),
+                    ));
                     ScaffoldMessenger.of(context)
                       ..hideCurrentSnackBar()
                       ..showSnackBar(
@@ -84,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                     String uname = response['username'];
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage(userName: uname)),
+                      MaterialPageRoute(builder: (context) => HomePage(username: uname)),
                     );
                     ScaffoldMessenger.of(context)
                       ..hideCurrentSnackBar()

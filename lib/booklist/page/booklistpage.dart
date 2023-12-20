@@ -1,41 +1,27 @@
+// Import External
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:ancestralreads/left_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
-import '../model/Book.dart';
+// Import Internal
+import 'package:ancestralreads/left_drawer.dart';
+import '../api/fetchBook.dart';
+import '../page/bookaddpage.dart';
 
 class BookList extends StatefulWidget {
-  const BookList({
-    Key? key,
-  }) : super(key: key);
+  final String username;
+  const BookList({Key? key, required this.username}) : super(key: key);
 
   @override
   State<BookList> createState() => BooklistPage();
 }
 
 class BooklistPage extends State<BookList> {
-
+  int count = 1;
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
-    Future<List<Book>> fetchBook() async {
-      var response = await request.get(
-        'http://10.0.2.2:8000/booklist/get-book-ft/'
-      );
-      var data = response;
-      List<Book> listBook = [];
-
-      for (var d in data) {
-        if (d != null) {
-          listBook.add(Book.fromJson(d));
-        }
-      }
-      return listBook;
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Align(
@@ -53,9 +39,9 @@ class BooklistPage extends State<BookList> {
         backgroundColor: Color.fromRGBO(137, 130, 114, 100.0),
         foregroundColor: Colors.black,
       ),
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer(username: widget.username),
       body: FutureBuilder(
-        future: fetchBook(),
+        future: fetchBook(request),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.data == null) {
             return const Center(child: CircularProgressIndicator());
@@ -72,17 +58,55 @@ class BooklistPage extends State<BookList> {
               return ListView.builder(
                 itemCount: snapshot.data?.length,
                 itemBuilder: (_, index) => Padding(
-                  padding: const EdgeInsets.all(5),
+                  padding: const EdgeInsetsDirectional.all(8),
                   child: Container(
-                    height: 50,
-                    child: Center(
-                        child: Text(
-                        "${snapshot.data[index].fields.title}"
-                      )
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(229, 223, 210, 100.0),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Color.fromRGBO(229, 223, 210, 100.0),
+                    child: ListTile(
+                      leading: Text('${count++}'),
+                      title: Text(
+                        '${snapshot.data?[index].fields.title}',
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      subtitle: Text(
+                        '${snapshot.data?[index].fields.firstName} | '
+                            '${snapshot.data?[index].fields.bookshelves} | '
+                            '${snapshot.data?[index].fields.year}',
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 10),
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () async {
+                          final response = await request.postJson(
+                              'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/booklist/delete-book-flutter/',
+                              jsonEncode(<String, int>{
+                                'pk': snapshot.data[index].pk,
+                              }));
+                          if (response['status'] == 'success') {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                                content: Text("Buku telah dihapus!"),
+                                duration: Duration(seconds: 1),
+                            ));
+                            setState(() {
+                              BooklistPage();
+                            });
+                          } else if (response['status'] == 'not found') {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                                content: Text("Buku sudah terhapus sebelumnya!"),
+                                duration: Duration(seconds: 1),
+                            ));
+                            setState(() {
+                              BooklistPage();
+                            });
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -90,7 +114,20 @@ class BooklistPage extends State<BookList> {
             }
           }
         },
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(
+          Icons.add,
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+              MaterialPageRoute(
+                builder: (context) => const BookAdd(),
+              )
+          );
+        },
+      ),
     );
   }
 }
