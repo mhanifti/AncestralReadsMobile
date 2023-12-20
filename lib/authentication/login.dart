@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: EdgeInsets.only(top: 174.0, bottom: 97.0),
                   child: Center(
                     child: Text(
-                      "AncestralReads",
+                      "Ancestral\n   Reads",
                       style: TextStyle(
                         color: Color(0xFFECECEC),
                         fontSize: 48,
@@ -182,11 +182,11 @@ class _LoginPageState extends State<LoginPage> {
             expand: true,
             snap: true,
             snapSizes: [
-              0.18,
+              0.14,
               0.32
             ],
-            initialChildSize: 0.18,
-            minChildSize: 0.18,
+            initialChildSize: 0.14,
+            minChildSize: 0.14,
             maxChildSize: 0.35,
             builder: (BuildContext contex, ScrollController scrollController){
               return SingleChildScrollView(

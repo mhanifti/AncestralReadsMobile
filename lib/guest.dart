@@ -42,18 +42,6 @@ class _GuestPageState extends State<GuestPage> {
         surfaceTintColor: const Color(0xff898272),
         backgroundColor: const Color(0xff898272),
         actions: <Widget> [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.0),
-            child: Text("Guest Page",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w600,
-                height: 0.10,
-              ),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: FilledButton(
@@ -187,7 +175,7 @@ class _GuestPageState extends State<GuestPage> {
                               ),
                               child: ListTile(
                                 tileColor: const Color(0xFFe5dfd2),
-                                leading: Text("${snapshot.data![index].fields.textNumber}"),
+                                leading: Text("${index+1}"),
                                 //${snapshot.data![index].pk}
                                 title: Text(
                                     "${snapshot.data![index].fields.title}.",

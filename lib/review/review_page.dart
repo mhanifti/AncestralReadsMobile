@@ -71,21 +71,16 @@ class ReviewPage extends State<Review> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 137, 130, 114),
+        backgroundColor: const Color(0xff898272),
         title: const Text(
             'Review',
             //textAlign: TextAlign.left,
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.black,
-              fontSize: 30,
             ),
           ),
         ),
-        //foregroundColor: Colors.black,
-        
-      //),
-
       drawer: LeftDrawer(username: widget.username,),
       body: Column(
         children: [

@@ -24,17 +24,14 @@ class BooklistPage extends State<BookList> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Align(
-          child: Text(
+        backgroundColor: const Color(0xff898272),
+        title: const Text(
             'Booklist',
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.black,
             ),
           ),
-        ),
-        backgroundColor: Color.fromRGBO(137, 130, 114, 100.0),
-        foregroundColor: Colors.black,
       ),
       drawer: LeftDrawer(username: widget.username),
       body: FutureBuilder(
@@ -58,8 +55,8 @@ class BooklistPage extends State<BookList> {
                   padding: const EdgeInsetsDirectional.all(8),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color.fromRGBO(229, 223, 210, 100.0),
-                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xFFe5dfd2),
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: ListTile(
                       leading: Text('${count++}'),
@@ -117,10 +114,10 @@ class BooklistPage extends State<BookList> {
           Icons.add,
         ),
         onPressed: () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
               MaterialPageRoute(
-                builder: (context) => const BookAdd(),
+                builder: (context) => BookAdd(username: widget.username),
               )
           );
         },

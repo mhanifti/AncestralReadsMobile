@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ancestralreads/booklist/page/booklistpage.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -7,8 +8,9 @@ import '../api/fetchBuku.dart';
 import 'package:ancestralreads/Kelola/buku.dart';
 
 class BookAdd extends StatefulWidget {
+  final String username;
   const BookAdd({
-    Key? key,
+    Key? key, required this.username
   }) : super(key: key);
 
   @override
@@ -17,6 +19,8 @@ class BookAdd extends StatefulWidget {
 
 class BookaddPage extends State<BookAdd> {
   Buku? dropdownValue;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +32,9 @@ class BookaddPage extends State<BookAdd> {
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.black,
-              fontSize: 30,
             ),
         ),
-        backgroundColor: Color.fromRGBO(137, 130, 114, 100.0),
-        foregroundColor: Colors.black,
+        backgroundColor: const Color(0xff898272),
       ),
       body: Column(
         children: [
@@ -98,6 +100,14 @@ class BookaddPage extends State<BookAdd> {
                   .showSnackBar(const SnackBar(
                   content: Text("Buku berhasil ditambah ke booklist!")
               ));
+              setState(() {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BookList(username: widget.username),
+                    )
+                );
+              });
             } else if (response['status'] == 'duplicate') {
               ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(

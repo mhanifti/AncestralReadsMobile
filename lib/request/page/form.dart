@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:ancestralreads/request/page/request_page.dart';
 import 'package:ancestralreads/left_drawer.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class RequestFormPage extends StatefulWidget {
   final String username;
@@ -20,17 +22,20 @@ class _RequestFormPageState extends State<RequestFormPage> {
 
   Future<void> addBook() async {
     final url = Uri.parse(
-        'http://10.0.2.2:8000/request_book/create-product-flutter/'); // Ganti dengan URL API Django Anda
+        'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/request_book/create-product-flutter/'); // Ganti dengan URL API Django Anda
     final response = await http.post(url,
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           'username': widget.username,
+          'language': "",
           'title': _title,
           'year': _year.toString(),
           'first_name': _firstName,
+          'last_name': "",
+          'subjects': "",
         }));
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       // Berhasil menyimpan buku
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Buku baru berhasil disimpan!")),
@@ -51,7 +56,6 @@ class _RequestFormPageState extends State<RequestFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         title: const Center(

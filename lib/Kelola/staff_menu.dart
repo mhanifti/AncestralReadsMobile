@@ -73,10 +73,10 @@ class _LibrarianState extends State<LibrarianPage> {
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.zero,
             ),
-            backgroundColor: const Color(0xffffffff),
+            backgroundColor: const Color(0xFFe5dfd2),
             scrollable: true,
             title: const Text(
-              "Data buku baru",
+              "Add Book Form",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
@@ -320,7 +320,7 @@ class _LibrarianState extends State<LibrarianPage> {
                         }
                       }
                     },
-                    child: const Text("Simpan buku baru",
+                    child: const Text("Add",
                       style: TextStyle(
                         color: Color(0xffededed),
                         fontSize: 12,
@@ -340,7 +340,7 @@ class _LibrarianState extends State<LibrarianPage> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text("Tutup",
+                    child: const Text("Close",
                       style: TextStyle(
                         color: Color(0xffededed),
                         fontSize: 12,
@@ -366,10 +366,10 @@ class _LibrarianState extends State<LibrarianPage> {
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.zero,
             ),
-            backgroundColor: const Color(0xffffffff),
+            backgroundColor: const Color(0xFFe5dfd2),
             scrollable: true,
             title: const Text(
-              "Data perubahan buku yang akan dilakukan",
+              "Book Edit Form",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
@@ -613,7 +613,7 @@ class _LibrarianState extends State<LibrarianPage> {
                         }
                       }
                     },
-                    child: const Text("Edit buku",
+                    child: const Text("Edit",
                       style: TextStyle(
                         color: Color(0xffededed),
                         fontSize: 12,
@@ -633,7 +633,7 @@ class _LibrarianState extends State<LibrarianPage> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text("Tutup",
+                    child: const Text("Close",
                       style: TextStyle(
                         color: Color(0xffededed),
                         fontSize: 12,
@@ -657,18 +657,6 @@ class _LibrarianState extends State<LibrarianPage> {
           surfaceTintColor: const Color(0xff898272),
           backgroundColor: const Color(0xff898272),
           actions: <Widget> [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.0),
-              child: Text("Staff Page",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w600,
-                  height: 0.10,
-                ),
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5.0),
               child: FilledButton(
@@ -734,7 +722,7 @@ class _LibrarianState extends State<LibrarianPage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(14.0),
-                          child:Text('Hello, ${widget.username} Welcome to',
+                          child:Text('Hello, ${widget.username}! Welcome to',
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.white,
@@ -778,7 +766,7 @@ class _LibrarianState extends State<LibrarianPage> {
                   //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   //   content: Text("Ouch!"),
                   // ));
-                  child: const Text("Buat buku baru",
+                  child: const Text("Add New Book",
                     style: TextStyle(
                       color: Color(0xffededed),
                       fontSize: 12,
@@ -821,7 +809,7 @@ class _LibrarianState extends State<LibrarianPage> {
                               ),
                               child: ListTile(
                                 tileColor: const Color(0xFFe5dfd2),
-                                leading: Text("${snapshot.data![index].fields.textNumber}"),
+                                leading: Text("${index+1}"),
                                 title: Text(
                                   "${snapshot.data![index].fields.title}.",
                                   style: const TextStyle(

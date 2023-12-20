@@ -39,7 +39,14 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Daftar Request'),
+          backgroundColor: const Color(0xff898272),
+          title: const Text(
+            'Daftar Request',
+            style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'Poppins'
+            )
+          ),
         ),
         drawer: const LeftDrawer(
           username: '',
@@ -52,10 +59,7 @@ class _ProductPageState extends State<ProductPage> {
                 borderRadius: BorderRadius.circular(15),
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: Colors.indigo,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
+                    backgroundColor: const Color(0xff144f36),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 10),
                   ),
