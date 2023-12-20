@@ -17,6 +17,7 @@ class LibrarianPage extends StatefulWidget {
 }
 
 class _LibrarianState extends State<LibrarianPage> {
+  late Future<List<Buku>> _books;
   final _formKey = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
   int _textNumber = 0;
@@ -47,6 +48,19 @@ class _LibrarianState extends State<LibrarianPage> {
       }
     }
     return list_buku;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _books = fetchBuku();
+  }
+
+  void refreshData() {
+    setState(() {
+      _books = fetchBuku();
+    });
   }
 
   Future<void> _formDialog(BuildContext context) {
@@ -296,9 +310,7 @@ class _LibrarianState extends State<LibrarianPage> {
                             content: Text("Buku baru berhasil disimpan!"),
                           ));
                           Navigator.of(context).pop();
-                          setState(() async {
-                            await fetchBuku();
-                          });
+                          refreshData();
                         } else {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
@@ -591,9 +603,7 @@ class _LibrarianState extends State<LibrarianPage> {
                             content: Text("Data buku berhasil diubah"),
                           ));
                           Navigator.of(context).pop();
-                          setState(() async {
-                            await fetchBuku();
-                          });
+                          refreshData();
                         } else {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
@@ -779,7 +789,7 @@ class _LibrarianState extends State<LibrarianPage> {
               ),
             ),
             FutureBuilder(
-                future: fetchBuku(),
+                future: _books,
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.data == null) {
                     return const Center(child: CircularProgressIndicator());
@@ -862,6 +872,7 @@ class _LibrarianState extends State<LibrarianPage> {
                                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                               content: Text("buku telah berhasil dihapus."),
                                             ));
+                                            refreshData();
                                           } else {
                                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                               content: Text("buku gagal dihapus."),
