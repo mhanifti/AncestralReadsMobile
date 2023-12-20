@@ -68,6 +68,19 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.login),
+            title: const Text('Request Book'),
+            // Bagian redirection ke LoginApp
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LoginApp(),
+                )
+              );
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.app_registration),
             title: const Text('Halaman Register'),
             onTap: () {
