@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +7,8 @@ import 'package:ancestralreads/request/page/request_page.dart';
 import 'package:ancestralreads/left_drawer.dart';
 
 class RequestFormPage extends StatefulWidget {
-  const RequestFormPage({super.key});
+  final String username;
+  const RequestFormPage({Key? key, required this.username}) : super(key: key);
 
   @override
   State<RequestFormPage> createState() => _RequestFormPageState();
@@ -15,12 +16,46 @@ class RequestFormPage extends StatefulWidget {
 
 class _RequestFormPageState extends State<RequestFormPage> {
   final _formKey = GlobalKey<FormState>();
-  String _name = "";
-  int _year= 0;
-  String _author = "";
+  String _title = "";
+  int _year = 0;
+  String _firstName = "";
+
+  Future<void> addBook() async {
+    final url = Uri.parse(
+        'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/request_book/create-product-flutter/'); // Ganti dengan URL API Django Anda
+    final response = await http.post(url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          'username': widget.username,
+          'language': "",
+          'title': _title,
+          'year': _year.toString(),
+          'first_name': _firstName,
+          'last_name': "",
+          'subjects': "",
+        }));
+
+    if (response.statusCode == 200) {
+      // Berhasil menyimpan buku
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Buku baru berhasil disimpan!")),
+      );
+      // Anda mungkin ingin navigasi ke halaman lain atau refresh state
+      Future.delayed(const Duration(seconds: 2), () {
+        // Atau, jika Anda ingin mengganti halaman saat ini dengan home, gunakan:
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => ProductPage(username: widget.username,)));
+      });
+    } else {
+      // Terjadi kesalahan
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Terdapat kesalahan, silakan coba lagi.")),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final request = context.watch<CookieRequest>();
 
     return Scaffold(
       appBar: AppBar(
@@ -32,13 +67,14 @@ class _RequestFormPageState extends State<RequestFormPage> {
         backgroundColor: Colors.indigo,
         foregroundColor: Colors.white,
       ),
-      drawer: const LeftDrawer(username: '',),
+      drawer: const LeftDrawer(
+        username: '',
+      ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            child:
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -51,7 +87,7 @@ class _RequestFormPageState extends State<RequestFormPage> {
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _name = value!;
+                      _title = value!;
                     });
                   },
                   validator: (String? value) {
@@ -66,8 +102,8 @@ class _RequestFormPageState extends State<RequestFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: "Tahun",
-                    labelText: "Tahun",
+                    hintText: "Year",
+                    labelText: "Year",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
@@ -100,7 +136,7 @@ class _RequestFormPageState extends State<RequestFormPage> {
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _author = value!;
+                      _firstName = value!;
                     });
                   },
                   validator: (String? value) {
@@ -117,34 +153,12 @@ class _RequestFormPageState extends State<RequestFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.indigo),
+                      backgroundColor: MaterialStateProperty.all(Colors.indigo),
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        final response = await request.postJson(
-                        "http://127.0.0.1:8000/create-product-flutter/",
-                        jsonEncode(<String, String>{
-                            'name': _name,
-                            'year': _year.toString(),
-                            'author': _author,
-                        }));
-                        if (response['status'] == 'success') {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                            content: Text("Item baru berhasil disimpan!"),
-                            ));
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => RequestPage(username: '',)),
-                            );
-                        } else {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                                content:
-                                    Text("Terdapat kesalahan, silakan coba lagi."),
-                            ));
-                        }
+                        _formKey.currentState!.save();
+                        addBook();
                       }
                     },
                     child: const Text(
@@ -154,9 +168,7 @@ class _RequestFormPageState extends State<RequestFormPage> {
                   ),
                 ),
               ),
-            ]
-          )
-        ),
+            ])),
       ),
     );
   }

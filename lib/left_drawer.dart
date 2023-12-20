@@ -165,7 +165,7 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile( //left drawernya bookmarks
-          leading: const Icon(Icons.book_online),
+          leading: const Icon(Icons.book_online, color: Color(0xfff9fffc)),
             title: const Text(
                 'Book Request',
                 style: TextStyle(
@@ -179,7 +179,7 @@ class LeftDrawer extends StatelessWidget {
               // Route menu ke halaman produk
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RequestPage(username: username)),
+                MaterialPageRoute(builder: (context) => ProductPage(username: username)),
               );
             },
           ),

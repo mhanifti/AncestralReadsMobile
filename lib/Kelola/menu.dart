@@ -54,7 +54,7 @@ class _HomeState extends State<HomePage> {
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.zero,
             ),
-            backgroundColor: Color.fromARGB(255, 218, 213, 201),
+            backgroundColor: const Color(0xFFe5dfd2),
             scrollable: true,
             title: const Text(
               "Add Book Review",
@@ -253,19 +253,13 @@ class _HomeState extends State<HomePage> {
         appBar: AppBar(
           surfaceTintColor: const Color(0xff898272),
           backgroundColor: const Color(0xff898272),
-          actions: <Widget> [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.0),
-              child: Text("Home",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w600,
-                  height: 0.10,
-                ),
-              ),
+          title: Text("Home",
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Poppins',
             ),
+          ),
+          actions: <Widget> [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5.0),
               child: FilledButton(
@@ -331,7 +325,7 @@ class _HomeState extends State<HomePage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(14.0),
-                          child:Text('Hello, ${widget.username} Welcome to',
+                          child:Text('Hello, ${widget.username}! Welcome to',
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.white,
@@ -394,7 +388,7 @@ class _HomeState extends State<HomePage> {
                               ),
                               child: ListTile(
                                 tileColor: const Color(0xFFe5dfd2),
-                                leading: Text("${snapshot.data![index].fields.textNumber}"),
+                                leading: Text("${index+1}"),
                                 title: Text(
                                   "${snapshot.data![index].fields.title}.",
                                   style: const TextStyle(
