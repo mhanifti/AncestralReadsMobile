@@ -28,11 +28,9 @@ class BooklistPage extends State<BookList> {
           alignment: AlignmentDirectional(0.00, 5.00),
           child: Text(
             'Booklist',
-            textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'Outfit',
+              fontFamily: 'Poppins',
               color: Colors.black,
-              fontSize: 30,
             ),
           ),
         ),
