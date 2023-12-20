@@ -12,6 +12,10 @@
 ### 🍎 Nama Aplikasi: AncestralReads
 
 [Referensi berdasarkan Web TK PTS](https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/)
+[![Build status](https://build.appcenter.ms/v0.1/apps/e125d092-8153-4145-aac5-451f3a223eb6/branches/main/badge)](https://appcenter.ms)
+[![Staging](https://github.com/mhanifti/AncestralReadsMobile/actions/workflows/staging.yml/badge.svg)](https://github.com/mhanifti/AncestralReadsMobile/actions/workflows/staging.yml)
+[![Pre-Release](https://github.com/mhanifti/AncestralReadsMobile/actions/workflows/pre-release.yml/badge.svg)](https://github.com/mhanifti/AncestralReadsMobile/actions/workflows/pre-release.yml)
+[![Release](https://github.com/mhanifti/AncestralReadsMobile/actions/workflows/release.yml/badge.svg)](https://github.com/mhanifti/AncestralReadsMobile/actions/workflows/release.yml)
 
 
 ### 💾 Cerita Aplikasi
