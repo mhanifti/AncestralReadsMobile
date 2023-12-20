@@ -2,7 +2,8 @@ import 'package:ancestralreads/authentication/login.dart';
 import 'package:flutter/material.dart';
 import 'package:ancestralreads/left_drawer.dart';
 import 'package:http/http.dart' as http;
-import 'package:ancestralreads/Kelola/buku.dart';
+import 'package:ancestralreads/Kelola/Buku.dart'; 
+import 'package:ancestralreads/bookmarks/models.dart';
 import 'dart:convert';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -394,7 +395,7 @@ class _HomeState extends State<HomePage> {
                               ),
                               child: ListTile(
                                 tileColor: const Color(0xFFe5dfd2),
-                                leading: Text("${snapshot.data![index].fields.textNumber}"),
+                                leading: Text("${index+1}"),
                                 title: Text(
                                   "${snapshot.data![index].fields.title}.",
                                   style: const TextStyle(

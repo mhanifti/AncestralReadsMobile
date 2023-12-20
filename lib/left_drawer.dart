@@ -1,6 +1,9 @@
-import 'review/review_page.dart';
-import 'booklist/page/booklistpage.dart';
-import 'kelola/menu.dart';
+import 'package:ancestralreads/authentication/login.dart';
+import 'package:ancestralreads/authentication/register.dart';
+import 'package:ancestralreads/bookmarks/bookmarks_page.dart';
+import 'package:ancestralreads/Kelola/menu.dart';
+import 'package:ancestralreads/booklist/page/booklistpage.dart';
+import 'package:ancestralreads/guest.dart';
 import 'package:flutter/material.dart';
 import 'bookmarks/bookmarks_page.dart';
 
