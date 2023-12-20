@@ -39,7 +39,14 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Daftar Request'),
+          backgroundColor: const Color(0xff898272),
+          title: const Text(
+            'Daftar Request',
+            style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'Poppins'
+            )
+          ),
         ),
         drawer: const LeftDrawer(
           username: '',
@@ -52,10 +59,7 @@ class _ProductPageState extends State<ProductPage> {
                 borderRadius: BorderRadius.circular(15),
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: Colors.indigo,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
+                    backgroundColor: const Color(0xff144f36),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 10),
                   ),
@@ -99,30 +103,30 @@ class _ProductPageState extends State<ProductPage> {
                         return ListView.builder(
                             itemCount: snapshot.data!.length,
                             itemBuilder: (_, index) => Container(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 12),
-                              padding: const EdgeInsets.all(20.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${snapshot.data![index].fields.title}",
-                                    style: const TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 12),
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${snapshot.data![index].fields.title}",
+                                        style: const TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                          "${snapshot.data![index].fields.year}"),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                          "${snapshot.data![index].fields.firstName}")
+                                    ],
                                   ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                      "${snapshot.data![index].fields.year}"),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                      "${snapshot.data![index].fields.firstName}")
-                                ],
-                              ),
-                            ));
+                                ));
                       }
                     }
                   }),

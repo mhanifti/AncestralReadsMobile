@@ -13,6 +13,7 @@
 ---
 
 [Referensi berdasarkan Web TK PTS](https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/)
+
 [![Build status](https://build.appcenter.ms/v0.1/apps/e125d092-8153-4145-aac5-451f3a223eb6/branches/main/badge)](https://appcenter.ms)
 [![Staging](https://github.com/mhanifti/AncestralReadsMobile/actions/workflows/staging.yml/badge.svg)](https://github.com/mhanifti/AncestralReadsMobile/actions/workflows/staging.yml)
 [![Pre-Release](https://github.com/mhanifti/AncestralReadsMobile/actions/workflows/pre-release.yml/badge.svg)](https://github.com/mhanifti/AncestralReadsMobile/actions/workflows/pre-release.yml)
@@ -41,10 +42,7 @@ Penjelasan:
 - Halaman ini berisi pilihan untuk menambahkan buku baru ke dalam perpustakaan, menghapus buku yang sudah ada dari daftar buku perpustakaan, serta mengubah deskripsi buku. Halaman ini hanya dapat digunakan oleh pustakawan.
 
 :stars:**Rating dan Review Buku** - Dyandra Nadine Zahira
-<<<<<<< HEAD
-=======
 
->>>>>>> a3e827fc54e1cff9f4f60808fa4cd67580b68397
 Penjelasan: 
 - Halaman ini berisi Fitur rating & review dimana pembaca dapat memberi rating & review terhadap buku-buku dalam katalog. 
 
