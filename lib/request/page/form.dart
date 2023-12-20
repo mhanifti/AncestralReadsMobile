@@ -7,7 +7,8 @@ import 'package:ancestralreads/request/page/request_page.dart';
 import 'package:ancestralreads/left_drawer.dart';
 
 class RequestFormPage extends StatefulWidget {
-  const RequestFormPage({super.key});
+  final String username;
+  const RequestFormPage({Key? key, required this.username}) : super(key: key);
 
   @override
   State<RequestFormPage> createState() => _RequestFormPageState();
@@ -18,7 +19,6 @@ class _RequestFormPageState extends State<RequestFormPage> {
   String _title = "";
   int _year = 0;
   String _firstName = "";
-  int _userId = 0;
 
   Future<void> addBook() async {
     final url = Uri.parse(
@@ -26,6 +26,7 @@ class _RequestFormPageState extends State<RequestFormPage> {
     final response = await http.post(url,
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
+          'username': widget.username,
           'title': _title,
           'year': _year.toString(),
           'first_name': _firstName,
@@ -40,7 +41,7 @@ class _RequestFormPageState extends State<RequestFormPage> {
       Future.delayed(const Duration(seconds: 2), () {
         // Atau, jika Anda ingin mengganti halaman saat ini dengan home, gunakan:
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const ProductPage()));
+            MaterialPageRoute(builder: (context) => ProductPage(username: widget.username,)));
       });
     } else {
       // Terjadi kesalahan
@@ -52,10 +53,7 @@ class _RequestFormPageState extends State<RequestFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    final request = context.watch<CookieRequest>();
-    final user = context.read()
-    _userId = request.
-
+    
     return Scaffold(
       appBar: AppBar(
         title: const Center(

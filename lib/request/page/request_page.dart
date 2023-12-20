@@ -6,19 +6,20 @@ import 'package:ancestralreads/request/page/product.dart';
 import 'package:ancestralreads/left_drawer.dart';
 
 class ProductPage extends StatefulWidget {
-    const ProductPage({Key? key}) : super(key: key);
+  final String username;
+  const ProductPage({Key? key, required this.username}) : super(key: key);
 
-    @override
-    _ProductPageState createState() => _ProductPageState();
+  @override
+  _ProductPageState createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
-Future<List<Product>> fetchProduct() async {
+  Future<List<Product>> fetchProduct() async {
     var url = Uri.parse(
         'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/request_book/json/');
     var response = await http.get(
-        url,
-        headers: {"Content-Type": "application/json"},
+      url,
+      headers: {"Content-Type": "application/json"},
     );
 
     // melakukan decode response menjadi bentuk json
@@ -27,20 +28,22 @@ Future<List<Product>> fetchProduct() async {
     // melakukan konversi data json menjadi object Product
     List<Product> listProduct = [];
     for (var d in data) {
-        if (d != null) {
-            listProduct.add(Product.fromJson(d));
-        }
+      if (d != null) {
+        listProduct.add(Product.fromJson(d));
+      }
     }
     return listProduct;
-}
+  }
 
-@override
-Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-        title: const Text('Daftar Request'),
+          title: const Text('Daftar Request'),
         ),
-        drawer: const LeftDrawer(username: '',),
+        drawer: const LeftDrawer(
+          username: '',
+        ),
         body: Column(
           children: [
             Padding(
@@ -53,14 +56,16 @@ Widget build(BuildContext context) {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
                   ),
                   onPressed: () {
                     // Aksi ketika tombol Add Book ditekan
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RequestFormPage()),
-                      );
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RequestFormPage(username: widget.username,)),
+                    );
                   },
                   child: const Text(
                     'Add Book',
@@ -72,55 +77,57 @@ Widget build(BuildContext context) {
                 ),
               ),
             ),
-            Expanded(child: 
-            FutureBuilder(
-                future: fetchProduct(),
-                builder: (context, AsyncSnapshot snapshot) {
+            Expanded(
+              child: FutureBuilder(
+                  future: fetchProduct(),
+                  builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.data == null) {
-                        return const Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     } else {
-                        if (!snapshot.hasData) {
+                      if (!snapshot.hasData) {
                         return const Column(
-                            children: [
+                          children: [
                             Text(
-                                "Tidak ada data request.",
-                                style:
-                                    TextStyle(color: Color(0xff59A5D8), fontSize: 20),
+                              "Tidak ada data request.",
+                              style: TextStyle(
+                                  color: Color(0xff59A5D8), fontSize: 20),
                             ),
                             SizedBox(height: 8),
-                            ],
+                          ],
                         );
-                    } else {
+                      } else {
                         return ListView.builder(
                             itemCount: snapshot.data!.length,
                             itemBuilder: (_, index) => Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 12),
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: Column(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 12),
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                        Text(
+                                      Text(
                                         "${snapshot.data![index].fields.title}",
                                         style: const TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold,
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Text("${snapshot.data![index].fields.year}"),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                            "${snapshot.data![index].fields.firstName}")
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                          "${snapshot.data![index].fields.year}"),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                          "${snapshot.data![index].fields.firstName}")
                                     ],
-                                    ),
+                                  ),
                                 ));
-                        }
+                      }
                     }
-                }),
+                  }),
             )
           ],
         ));
-    }
+  }
 }
