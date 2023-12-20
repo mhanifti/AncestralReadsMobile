@@ -1,6 +1,7 @@
+import 'request/page/request_page.dart';
 import 'review/review_page.dart';
 import 'booklist/page/booklistpage.dart';
-import 'kelola/menu.dart';
+import 'Kelola/menu.dart';
 import 'package:flutter/material.dart';
 import 'bookmarks/bookmarks_page.dart';
 
@@ -94,6 +95,7 @@ class LeftDrawer extends StatelessWidget {
           //     );
           //   },
           // ),
+          
           ListTile(
             leading: const Icon(
                 Icons.reviews_outlined,
@@ -159,6 +161,25 @@ class LeftDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => BookmarksPage(username: username)),
+              );
+            },
+          ),
+          ListTile( //left drawernya bookmarks
+          leading: const Icon(Icons.book_online),
+            title: const Text(
+                'Book Request',
+                style: TextStyle(
+                  color: Color(0xFFF9FFFC),
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w400,
+                ),
+            ),
+            onTap: () {
+              // Route menu ke halaman produk
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RequestPage(username: username)),
               );
             },
           ),

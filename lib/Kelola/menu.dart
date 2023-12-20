@@ -54,10 +54,10 @@ class _HomeState extends State<HomePage> {
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.zero,
             ),
-            backgroundColor: const Color(0xffffffff),
+            backgroundColor: Color.fromARGB(255, 218, 213, 201),
             scrollable: true,
             title: const Text(
-              "Form Tambah Review",
+              "Add Book Review",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
@@ -78,7 +78,14 @@ class _HomeState extends State<HomePage> {
                             hintText: "Nama Reviewer",
                             labelText: "Nama Reviewer",
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(color: Color(0xff144F36), width: 2.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red, width: 2.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xff144F36), width: 2.0),
                             ),
                           ),
                           onChanged: (String? value) {
@@ -102,7 +109,14 @@ class _HomeState extends State<HomePage> {
                             hintText: "Rating",
                             labelText: "Rating",
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(color: Color(0xff144F36), width: 2.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red, width: 2.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xff144F36), width: 2.0),
                             ),
                           ),
                           onChanged: (String? value) {
@@ -135,7 +149,14 @@ class _HomeState extends State<HomePage> {
                             hintText: "Deskripsi",
                             labelText: "Deskripsi",
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(color: Color(0xff144F36), width: 2.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red, width: 2.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xff144F36), width: 2.0),
                             ),
                           ),
                           onChanged: (String? value) {
@@ -157,47 +178,48 @@ class _HomeState extends State<HomePage> {
             ),
             actions: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all(Colors.indigo),
+                    backgroundColor: MaterialStateProperty.all(Color(0xff144f36)), // Warna hijau kustom
+                    shape: MaterialStateProperty.all<OutlinedBorder>(const RoundedRectangleBorder())
                   ),
-
                   onPressed: () async {
                     if (_formKey3.currentState!.validate()) {
                       // Kirim ke Django dan tunggu respons
                       final response = await request.postJson(
-                          "https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/review/create-flutter/",
-                          jsonEncode(<String, String>{
-                            'username' : widget.username,
-                            'reviewer_name': _nama,
-                            'id_buku': id.toString(),
-                            'rating': _rating.toString(),
-                            'review_text': _deskripsi,
-                          }));
+                        "https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/review/create-flutter/",
+                        jsonEncode(<String, String>{
+                          'username': widget.username,
+                          'reviewer_name': _nama,
+                          'id_buku': id.toString(),
+                          'rating': _rating.toString(),
+                          'review_text': _deskripsi,
+                        }),
+                      );
                       if (response['status'] == 'success') {
                         Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Review(username: widget.username),
-                            ));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Review(username: widget.username),
+                          ),
+                        );
                       } else {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content:
-                          Text("Terdapat kesalahan, silakan coba lagi."),
-                        ));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Terdapat kesalahan, silakan coba lagi."),
+                          ),
+                        );
                       }
                     }
                   },
-
                   child: const Text(
-                    "Save",
+                    "Add",
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: FilledButton(
@@ -208,7 +230,7 @@ class _HomeState extends State<HomePage> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text("Tutup",
+                    child: const Text("Close",
                       style: TextStyle(
                         color: Color(0xffededed),
                         fontSize: 12,
@@ -396,32 +418,6 @@ class _HomeState extends State<HomePage> {
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.bookmark_add_outlined),
-                                      onPressed: () async {
-                                        var data = jsonEncode({'pk': snapshot.data![index].pk});
-                                        final response = await request.post(
-                                          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/booklist/add-book-flutter/',
-                                          data,
-                                        );
-                                        if (response['status'] == 'success') {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                              content: Text("Buku berhasil ditambah ke booklist!")
-                                          ));
-                                        } else if (response['status'] == 'duplicate') {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                              content: Text("Buku sudah ada dalam booklist anda!")
-                                          ));
-                                        } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                              content: Text("Terjadi error saat penambahan buku")
-                                          ));
-                                        }
-                                      },
-                                    ),
                                     IconButton (
                                         icon: const Icon(Icons.reviews_outlined),
                                         onPressed: () async =>  _formDialog(context, snapshot.data![index].pk),
@@ -437,12 +433,14 @@ class _HomeState extends State<HomePage> {
                                         if (response['status'] == 'ok') {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(const SnackBar(
-                                              content: Text("Buku berhasil ditambah ke bookmark!")
+                                              content: Text("Buku berhasil ditambah ke bookmark!"),
+                                              duration: Duration(seconds: 1),
                                           ));
                                         } else {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(const SnackBar(
-                                              content: Text("Buku sudah pernah ditambah ke bookmark!")
+                                              content: Text("Buku sudah pernah ditambah ke bookmark!"),
+                                              duration: Duration(seconds: 1),
                                           ));
                                         }
                                       },
