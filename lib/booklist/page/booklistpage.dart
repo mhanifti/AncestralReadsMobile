@@ -25,7 +25,6 @@ class BooklistPage extends State<BookList> {
     return Scaffold(
       appBar: AppBar(
         title: const Align(
-          alignment: AlignmentDirectional(0.00, 5.00),
           child: Text(
             'Booklist',
             style: TextStyle(

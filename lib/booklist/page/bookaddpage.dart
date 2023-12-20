@@ -23,16 +23,13 @@ class BookaddPage extends State<BookAdd> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Align(
-          alignment: AlignmentDirectional(0.00, 5.00),
-          child: Text(
+        title: const Text(
             'BookAdd',
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.black,
               fontSize: 30,
             ),
-          ),
         ),
         backgroundColor: Color.fromRGBO(137, 130, 114, 100.0),
         foregroundColor: Colors.black,
