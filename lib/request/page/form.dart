@@ -66,8 +66,8 @@ class _RequestFormPageState extends State<RequestFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: "Tahun",
-                    labelText: "Tahun",
+                    hintText: "Year",
+                    labelText: "Year",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
@@ -136,7 +136,7 @@ class _RequestFormPageState extends State<RequestFormPage> {
                             ));
                             Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(builder: (context) => RequestPage(username: '',)),
+                                MaterialPageRoute(builder: (context) => ProductPage()),
                             );
                         } else {
                             ScaffoldMessenger.of(context)

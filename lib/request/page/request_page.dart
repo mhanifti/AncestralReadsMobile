@@ -1,127 +1,124 @@
+import 'package:ancestralreads/request/page/form.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:ancestralreads/bookmarks/models.dart';
+import 'package:ancestralreads/request/page/product.dart';
 import 'package:ancestralreads/left_drawer.dart';
-import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'package:provider/provider.dart';
 
-class RequestPage extends StatefulWidget {
-  final String username;
-  const RequestPage({Key? key, required this.username}) : super(key: key);
+class ProductPage extends StatefulWidget {
+    const ProductPage({Key? key}) : super(key: key);
 
-  @override
-  _RequestPageState createState() => _RequestPageState();
+    @override
+    _ProductPageState createState() => _ProductPageState();
 }
 
-class _RequestPageState extends State<RequestPage> {
-  @override
-  Widget build(BuildContext context) {
-    final request = context.watch<CookieRequest>();
-    Future<List<Product>> fetchBook() async {
+class _ProductPageState extends State<ProductPage> {
+Future<List<Product>> fetchProduct() async {
+    var url = Uri.parse(
+        'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/request_book/json/');
+    var response = await http.get(
+        url,
+        headers: {"Content-Type": "application/json"},
+    );
 
-      var response = await request.get(
-          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/request_book/show_main/'
-      );
-      var data = response;
+    // melakukan decode response menjadi bentuk json
+    var data = jsonDecode(utf8.decode(response.bodyBytes));
 
-      // melakukan konversi data json menjadi object Product
-      List<Product> list_product = [];
-      for (var d in data) {
+    // melakukan konversi data json menjadi object Product
+    List<Product> listProduct = [];
+    for (var d in data) {
         if (d != null) {
-          list_product.add(Product.fromJson(d));
+            listProduct.add(Product.fromJson(d));
         }
-      }
-      return list_product;
     }
+    return listProduct;
+}
+
+@override
+Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xff898272),
-          title: const Text('Request Book',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Poppins'
-              )
+        title: const Text('Daftar Request'),
+        ),
+        drawer: const LeftDrawer(username: '',),
+        body: Column(
+          children: [
+            Padding(
+      padding: const EdgeInsets.only(right: 20),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.indigo,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          ),
+          onPressed: () {
+            // Aksi ketika tombol Add Book ditekan
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RequestFormPage()),
+              );
+          },
+          child: const Text(
+            'Add Book',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
           ),
         ),
-        drawer: LeftDrawer(username: widget.username),
-        body: FutureBuilder(
-            future: fetchBook(),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.data == null) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                if (!snapshot.hasData) {
-                  return const Column(
-                    children: [
-                      Text(
-                        "Tidak ada data produk.",
-                        style:
-                        TextStyle(color: Color(0xff59A5D8), fontSize: 20),
-                      ),
-                      SizedBox(height: 8),
-                    ],
-                  );
-                } else {
-                  return ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (_, index) => Container(
-                      decoration: BoxDecoration(
-                          color: const Color(0xFFe5dfd2),
-                          borderRadius: BorderRadius.circular(15.0)
-                      ),
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 7),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 6, vertical: 4
-                      ),
-                      child: ListTile(
-                          tileColor: const Color(0xFFe5dfd2),
-                          leading: Text("${index+1}"),
-                          title: Text(
-                            "${snapshot.data![index].fields.title}.",
-                            style: const TextStyle(
-                                color: Color(0xff333333),
-                                fontSize: 17,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w700,
-                                overflow: TextOverflow.ellipsis
+      ),
+    ),
+            FutureBuilder(
+                future: fetchProduct(),
+                builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                        return const Center(child: CircularProgressIndicator());
+                    } else {
+                        if (!snapshot.hasData) {
+                        return const Column(
+                            children: [
+                            Text(
+                                "Tidak ada data request.",
+                                style:
+                                    TextStyle(color: Color(0xff59A5D8), fontSize: 20),
                             ),
-                          ),
-                          subtitle: Text(
-                            "${snapshot.data![index].fields.firstName}"
-                                " | ${snapshot.data![index].fields.year} | ${snapshot.data![index].fields.year}",
-                            style: const TextStyle(
-                              color: Color(0xff333333),
-                              fontSize: 10,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          trailing:IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () async {
-                              Map data = {'pk':snapshot.data![index].pk};
-                              final url = Uri.parse('https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/request_book/delete-product-flutter/');
-                              final response = await http.delete(
-                                  url,
-                                  headers: {"Content-Type": "application/json"},
-                                  body: jsonEncode(data));
-
-                              if (response.statusCode == 201) {
-                                setState(() {
-                                  snapshot.data!.removeAt(index);
-                                });
-                              }
-                            },
-                          )
-                      ),
-                    ),
-                  );
-                }
-              }
-            }
-        )
-    );
-  }
+                            SizedBox(height: 8),
+                            ],
+                        );
+                    } else {
+                        return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (_, index) => Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 12),
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        Text(
+                                        "${snapshot.data![index].fields.title}",
+                                        style: const TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold,
+                                        ),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text("${snapshot.data![index].fields.year}"),
+                                        const SizedBox(height: 10),
+                                        Text(
+                                            "${snapshot.data![index].fields.firstName}")
+                                    ],
+                                    ),
+                                ));
+                        }
+                    }
+                }),
+          ],
+        ));
+    }
 }
