@@ -185,7 +185,7 @@ class _FormRegister extends State<RegisterForm> {
                     ),
                     onPressed: () async {
                       final response = await request.post(
-                          'http://localhost:8000/auth/register/',
+                          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/auth/register/',
                           {
                             "username": username,
                             "password1": password,
@@ -226,7 +226,7 @@ class _FormRegister extends State<RegisterForm> {
                     ),
                     onPressed: () async {
                       final response = await request.post(
-                          'http://127.0.0.1:8000/auth/register/',
+                          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/auth/register/',
                           {
                             "username": username,
                             "password1": password,

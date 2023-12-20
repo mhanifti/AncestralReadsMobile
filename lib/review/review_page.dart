@@ -10,9 +10,8 @@ import 'package:provider/provider.dart';
 
 
 class Review extends StatefulWidget {
-  const Review({
-    Key? key,
-  }) : super(key: key);
+  final String username;
+  const Review({Key? key, required this.username}) : super(key: key);
 
   @override
   State<Review> createState() => ReviewPage();
@@ -43,7 +42,7 @@ class ReviewPage extends State<Review> {
     // final request = context.watch<CookieRequest>();
     Future<List<Ulasan>> fetchReview(request) async {
       var response = await request.get(
-          'http://localhost:8000/review/json/',
+          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/review/json/',
           
       );
       // melakukan decode response menjadi bentuk json
@@ -73,24 +72,22 @@ class ReviewPage extends State<Review> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Align(
-          alignment: AlignmentDirectional(0.00, 5.00),
-          child: Text(
+        backgroundColor: Color.fromARGB(255, 137, 130, 114),
+        title: const Text(
             'Review',
-            textAlign: TextAlign.center,
+            //textAlign: TextAlign.left,
             style: TextStyle(
-              fontFamily: 'Outfit',
+              fontFamily: 'Poppins',
               color: Colors.black,
               fontSize: 30,
             ),
           ),
         ),
-        backgroundColor: Color.fromRGBO(137, 130, 114, 100.0),
-        foregroundColor: Colors.black,
+        //foregroundColor: Colors.black,
         
-      ),
-      
-      drawer: const LeftDrawer(),
+      //),
+
+      drawer: LeftDrawer(username: widget.username,),
       body: Column(
         children: [
           // Filter Section
@@ -111,7 +108,7 @@ class ReviewPage extends State<Review> {
                         _selectedRating = value;
                       });
                     },
-                    activeColor: Color.fromARGB(255, 86, 88, 90),
+                    activeColor: Color(0xff898272),
                   ),
                 ),
                 ElevatedButton(
@@ -123,7 +120,7 @@ class ReviewPage extends State<Review> {
                   },
                   child: Text('Clear Filter', style: TextStyle(color: Colors.white),),
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 95, 88, 88), // Ganti warna tombol di sini
+                    primary: Color(0xff898272), // Ganti warna tombol di sini
                   ),
                 ),
               ],
@@ -143,7 +140,7 @@ class ReviewPage extends State<Review> {
                       children: [
                         Text(
                           "Belum ada buku yang di-Review.",
-                          style: TextStyle(color: Color.fromARGB(255, 14, 14, 14), fontSize: 20),
+                          style: TextStyle(color: Color(0xff59A5D8), fontSize: 20),
                         ),
                         SizedBox(height: 8),
                       ],
@@ -152,7 +149,7 @@ class ReviewPage extends State<Review> {
                     return ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (_, index) => Card(
-                        color: Color.fromARGB(255, 211, 210, 183),
+                        color: Color.fromARGB(255, 236, 234, 208),
                         elevation: 5,
                         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
                         child: Padding(
@@ -161,7 +158,6 @@ class ReviewPage extends State<Review> {
                             mainAxisAlignment: MainAxisAlignment.center, // Center vertically
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-
                               FutureBuilder(
                               future: getTitle(request, snapshot.data[index].fields.buku),
                               builder: (context, AsyncSnapshot<String?> snapshot) {
@@ -174,47 +170,49 @@ class ReviewPage extends State<Review> {
                                 } else {
                                   return Text(
                                     snapshot.data!,
-                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                    style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                                     textAlign: TextAlign.center,
                                   );
                                 }
                               },
                             ),
-                            
                               const SizedBox(height: 10),
                               Text(
                                 "Reviewer: ${snapshot.data[index].fields.reviewerName}",
-                                style: TextStyle(color: Colors.grey),
+                                style: TextStyle(fontSize: 13, color: Color.fromARGB(255, 131, 131, 131)),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                "${snapshot.data![index].fields.reviewText}",
-                                style: TextStyle(fontSize: 16),
+                                "Date: ${snapshot.data![index].fields.reviewDate}",
+                                style: TextStyle(fontSize: 13, color: Color.fromARGB(255, 131, 131, 131)),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 10),
                               StarRating(rating: snapshot.data![index].fields.rating),
                               const SizedBox(height: 10),
                               Text(
-                                "Date: ${snapshot.data![index].fields.reviewDate}",
-                                style: TextStyle(color: Colors.grey),
+                                "${snapshot.data![index].fields.reviewText}",
+                                style: TextStyle(fontSize: 17, color: Color(0xff333333),),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 10),
                               // tambah tombol delete
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color.fromARGB(255, 180, 204, 176), // Change button color
+                                  primary: const Color(0xff144f36), // Warna latar belakang tombol
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0), // Radius sudut untuk membuat kotak dengan sudut bulat
+                                  ),
                                 ),
-                                child: const Text('Delete'),
                                 onPressed: () async {
-                                  Map data = {'pk':snapshot.data![index].pk};
-                                  final url =
-                                      Uri.parse('http://127.0.0.1:8000/review/delete-ajax/');
-                                  final response = await http.delete(url,
-                                  headers: {"Content-Type": "application/json"},
-                                  body: jsonEncode(data));
+                                  Map data = {'pk': snapshot.data![index].pk};
+                                  final url = Uri.parse('https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/review/delete-ajax/');
+                                  final response = await http.delete(
+                                    url,
+                                    headers: {"Content-Type": "application/json"},
+                                    body: jsonEncode(data),
+                                  );
 
                                   if (response.statusCode == 201) {
                                     setState(() {
@@ -222,7 +220,18 @@ class ReviewPage extends State<Review> {
                                     });
                                   }
                                 },
+                                child: Container(
+                                  padding: const EdgeInsets.all(10.0), // Sesuaikan padding sesuai kebutuhan
+                                  child: Text(
+                                    'Delete',
+                                    style: TextStyle(
+                                      color: Colors.white, // Warna teks
+                                      fontWeight: FontWeight.bold, // Gaya teks
+                                    ),
+                                  ),
+                                ),
                               ),
+
                             ],
                           ),
                         ),

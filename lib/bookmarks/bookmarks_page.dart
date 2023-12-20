@@ -7,7 +7,8 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
 class BookmarksPage extends StatefulWidget {
-  const BookmarksPage({Key? key}) : super(key: key);
+  final String username;
+  const BookmarksPage({Key? key, required this.username}) : super(key: key);
 
   @override
   _BookmarksPageState createState() => _BookmarksPageState();
@@ -20,7 +21,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
     Future<List<Product>> fetchBook() async {
 
       var response = await request.get(
-          'http://localhost:8000/bookmarks/get-bookmark/'
+          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/bookmarks/get-bookmark/'
       );
       var data = response;
 
@@ -43,7 +44,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
               )
           ),
         ),
-        drawer: const LeftDrawer(),
+        drawer: LeftDrawer(username: widget.username),
         body: FutureBuilder(
             future: fetchBook(),
             builder: (context, AsyncSnapshot snapshot) {
@@ -101,7 +102,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
                             icon: Icon(Icons.delete),
                             onPressed: () async {
                               Map data = {'pk':snapshot.data![index].pk};
-                              final url = Uri.parse('http://localhost:8000/bookmarks/delete-bookmark/');
+                              final url = Uri.parse('https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/bookmarks/delete-bookmark/');
                               final response = await http.delete(
                                   url,
                                   headers: {"Content-Type": "application/json"},

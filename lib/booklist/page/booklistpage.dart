@@ -8,9 +8,8 @@ import 'package:provider/provider.dart';
 import '../api/fetchBook.dart';
 
 class BookList extends StatefulWidget {
-  const BookList({
-    Key? key,
-  }) : super(key: key);
+  final String username;
+  const BookList({Key? key, required this.username}) : super(key: key);
 
   @override
   State<BookList> createState() => BooklistPage();
@@ -38,7 +37,7 @@ class BooklistPage extends State<BookList> {
         backgroundColor: Color.fromRGBO(137, 130, 114, 100.0),
         foregroundColor: Colors.black,
       ),
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer(username: widget.username),
       body: FutureBuilder(
         future: fetchBook(request),
         builder: (context, AsyncSnapshot snapshot) {
@@ -85,15 +84,19 @@ class BooklistPage extends State<BookList> {
                                         child: Text(
                                           '${snapshot.data?[index].fields.title}',
                                           overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(fontSize: 4),
+                                          style: const TextStyle(fontSize: 16),
                                         ),
                                       ),
                                       SizedBox(height: 4), // Add some space between the title and the details
-                                      Text(
-                                        '${snapshot.data?[index].fields.firstName} | '
-                                            '${snapshot.data?[index].fields.bookshelves} | '
-                                            '${snapshot.data?[index].fields.year}',
-                                        style: const TextStyle(fontSize: 10),
+                                      Container(
+                                        width: 300,
+                                          child: Text(
+                                            '${snapshot.data?[index].fields.firstName} | '
+                                                '${snapshot.data?[index].fields.bookshelves} | '
+                                                '${snapshot.data?[index].fields.year}',
+                                            style: const TextStyle(fontSize: 10),
+                                            overflow: TextOverflow.ellipsis,
+                                        )
                                       ),
                                     ],
                                   ),
@@ -109,11 +112,23 @@ class BooklistPage extends State<BookList> {
                               icon: Icon(Icons.delete),
                               onPressed: () async {
                                 final response = await request.postJson(
-                                    'http://localhost:8000/booklist/delete-book-flutter/',
+                                    'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/booklist/delete-book-flutter/',
                                     jsonEncode(<String, int>{
                                       'pk': snapshot.data[index].pk,
                                     }));
                                 if (response['status'] == 'success') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                      content: Text("Buku telah dihapus!")
+                                  ));
+                                  setState(() {
+                                    BooklistPage();
+                                  });
+                                } else if (response['status'] == 'not found') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                      content: Text("Buku sudah terhapus sebelumnya!")
+                                  ));
                                   setState(() {
                                     BooklistPage();
                                   });
