@@ -27,9 +27,8 @@ class BookaddPage extends State<BookAdd> {
           alignment: AlignmentDirectional(0.00, 5.00),
           child: Text(
             'BookAdd',
-            textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'Outfit',
+              fontFamily: 'Poppins',
               color: Colors.black,
               fontSize: 30,
             ),

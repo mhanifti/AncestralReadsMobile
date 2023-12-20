@@ -8,6 +8,8 @@
 .buildlog/
 .history
 .svn/
+*.keystore
+*.jks
 migrate_working_dir/
 
 # IntelliJ related
