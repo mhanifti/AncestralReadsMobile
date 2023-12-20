@@ -44,34 +44,35 @@ Widget build(BuildContext context) {
         body: Column(
           children: [
             Padding(
-      padding: const EdgeInsets.only(right: 20),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-        child: TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.indigo,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
+              padding: const EdgeInsets.only(right: 20),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.indigo,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  ),
+                  onPressed: () {
+                    // Aksi ketika tombol Add Book ditekan
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RequestFormPage()),
+                      );
+                  },
+                  child: const Text(
+                    'Add Book',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          ),
-          onPressed: () {
-            // Aksi ketika tombol Add Book ditekan
-            Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RequestFormPage()),
-              );
-          },
-          child: const Text(
-            'Add Book',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-            ),
-          ),
-        ),
-      ),
-    ),
+            Expanded(child: 
             FutureBuilder(
                 future: fetchProduct(),
                 builder: (context, AsyncSnapshot snapshot) {
@@ -118,6 +119,7 @@ Widget build(BuildContext context) {
                         }
                     }
                 }),
+            )
           ],
         ));
     }
