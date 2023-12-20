@@ -35,7 +35,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
             backgroundColor: Colors.indigo,
             foregroundColor: Colors.white,
           ),
-          drawer: const LeftDrawer(),
+          drawer: LeftDrawer(username: widget.username),
           body: Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -65,7 +65,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                       },
                     ),
                   ),
-             
+                                   
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
@@ -78,20 +78,28 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                       ),
                       onChanged: (String? value) {
                         setState(() {
-                          _rating = int.parse(value!);
+                          _rating = int.tryParse(value ?? "")!;
                         });
                       },
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
                           return "Rating tidak boleh kosong!";
                         }
-                        if (int.tryParse(value) == null) {
+
+                        int? rating = int.tryParse(value);
+                        if (rating == null) {
                           return "Rating harus berupa angka!";
                         }
+
+                        if (rating <= 0 || rating > 5) {
+                          return "Rating harus antara 1 dan 5!";
+                        }
+
                         return null;
                       },
                     ),
                   ),
+
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
@@ -120,7 +128,6 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                     alignment: Alignment.bottomCenter,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      
                       child: ElevatedButton(
                                 style: ButtonStyle(
                                   backgroundColor:
@@ -131,7 +138,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                                     if (_formKey.currentState!.validate()) {
                                         // Kirim ke Django dan tunggu respons
                                         final response = await request.postJson(
-                                        "http://localhost:8000/review/create-flutter/",
+                                        "https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/review/create-flutter/",
                                         jsonEncode(<String, String>{
                                             'username' : widget.username,
                                             'reviewer_name': _nama,
@@ -143,7 +150,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                                              Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => const Review(),
+                                                builder: (context) => Review(username: widget.username),
                                               ));
                                         } else {
                                             ScaffoldMessenger.of(context)
@@ -165,13 +172,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                   ),
 
 
-           ]),
-
-          ),
-        ));
-      }
-  }
-
+  /////////////////////////////////////////////////////////////////////////////
 // import 'package:flutter/material.dart';
 
 // class AddReviewForm extends StatefulWidget {
@@ -239,10 +240,10 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
 //                 addReview();
 //               },
 //               child: Text('Add Review'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+                ],
+                ),
+            ),
+        ),
+    );
+  }
+}

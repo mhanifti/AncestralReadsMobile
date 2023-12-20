@@ -1,13 +1,14 @@
-import 'authentication/login.dart';
-import 'authentication/register.dart';
+import 'package:ancestralreads/request/page/request_page.dart';
+
 import 'review/review_page.dart';
 import 'booklist/page/booklistpage.dart';
-import 'guest.dart';
+import 'kelola/menu.dart';
 import 'package:flutter/material.dart';
 import 'bookmarks/bookmarks_page.dart';
 
 class LeftDrawer extends StatelessWidget {
-  const LeftDrawer({super.key});
+  final String username;
+  const LeftDrawer({super.key, required this.username});
 
   @override
   Widget build(BuildContext context) {
@@ -25,18 +26,10 @@ class LeftDrawer extends StatelessWidget {
                   'Ancestral Reads',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
                     color: Colors.white,
-                  ),
-                ),
-                Padding(padding: EdgeInsets.all(10)),
-                Text("TBA",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.white
+                    fontSize: 25,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
@@ -44,89 +37,139 @@ class LeftDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.home_outlined),
-            title: const Text('Halaman Utama'),
-            // Bagian redirection ke MyHomePage
+            title: const Text(
+                'Home Page',
+                  style: TextStyle(
+                  color: Color(0xFFF9FFFC),
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w400,
+                ),
+            ),
             onTap: () {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const GuestPage(),
+                    builder: (context) => HomePage(username: username),
                   ));
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.login),
-            title: const Text('Halaman Login'),
-            // Bagian redirection ke LoginApp
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginApp(),
-                )
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.login),
-            title: const Text('Request Book'),
-            // Bagian redirection ke LoginApp
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginApp(),
-                )
-              );
-            },
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.login),
+          //   title: const Text(
+          //       'Login',
+          //         style: TextStyle(
+          //         color: Color(0xFFF9FFFC),
+          //         fontSize: 20,
+          //         fontFamily: 'Poppins',
+          //         fontWeight: FontWeight.w400,
+          //       ),
+          //   ),
+          //   // Bagian redirection ke LoginApp
+          //   onTap: () {
+          //     Navigator.pushReplacement(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => const LoginApp(),
+          //       )
+          //     );
+          //   },
+          // ),
+          // ListTile(
+          //   leading: const Icon(Icons.app_registration),
+          //   title: const Text(
+          //       'Register',
+          //       style: TextStyle(
+          //         color: Color(0xFFF9FFFC),
+          //         fontSize: 20,
+          //         fontFamily: 'Poppins',
+          //         fontWeight: FontWeight.w400,
+          //       ),
+          //   ),
+          //   onTap: () {
+          //     Navigator.pushReplacement(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => const RegisterApp(),
+          //       )
+          //     );
+          //   },
+          // ),
+          
           ListTile(
             leading: const Icon(Icons.app_registration),
-            title: const Text('Halaman Register'),
+            title: const Text(
+                'Book Reviews',
+                style: TextStyle(
+                  color: Color(0xFFF9FFFC),
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w400,
+                ),
+            ),
             onTap: () {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const RegisterApp(),
-                )
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.app_registration),
-            title: const Text('Review'),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Review(),
+                  builder: (context) => Review(username: username),
                   )
                 );
               },
             ),
           ListTile(
             leading: const Icon(Icons.menu_book),
-            title: const Text('Halaman Booklist'),
+            title: const Text(
+                'Booklist',
+                style: TextStyle(
+                  color: Color(0xFFF9FFFC),
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w400,
+                ),
+            ),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const BookList(),
+                  builder: (context) => BookList(username: username),
                 )
               );
             },
           ),
           ListTile( //left drawernya bookmarks
-            title: const Text('Halaman Bookmarks',
-              style: TextStyle(
-                  color: Colors.white
-              ),
+            title: const Text(
+                'Bookmarks',
+                style: TextStyle(
+                  color: Color(0xFFF9FFFC),
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w400,
+                ),
             ),
             onTap: () {
               // Route menu ke halaman produk
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const BookmarksPage()),
+                MaterialPageRoute(builder: (context) => BookmarksPage(username: username)),
+              );
+            },
+          ),
+          ListTile( //left drawernya bookmarks
+          leading: const Icon(Icons.book_online),
+            title: const Text(
+                'Book Request',
+                style: TextStyle(
+                  color: Color(0xFFF9FFFC),
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w400,
+                ),
+            ),
+            onTap: () {
+              // Route menu ke halaman produk
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RequestPage(username: username)),
               );
             },
           ),

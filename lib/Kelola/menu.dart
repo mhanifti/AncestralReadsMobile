@@ -6,19 +6,23 @@ import 'package:ancestralreads/Kelola/buku.dart';
 import 'dart:convert';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-
-import '../review/review_form.dart';
+import '../review/review_page.dart';
 
 class HomePage extends StatefulWidget {
-  final String userName;
+  final String username;
 
-  const HomePage({Key? key, required this.userName}) : super(key: key);
+  const HomePage({Key? key, required this.username}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<HomePage> {
+  final _formKey3 = GlobalKey<FormState>();
+  String _nama = "";
+  int _rating = 0;
+  String _deskripsi = "";
+
   Future<List<Buku>> fetchBuku() async {
     var url = Uri.parse(
         'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/json/');
@@ -38,6 +42,186 @@ class _HomeState extends State<HomePage> {
       }
     }
     return list_buku;
+  }
+
+  Future<void> _formDialog(BuildContext context, int id) {
+    final request = context.read<CookieRequest>();
+
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+            backgroundColor: const Color(0xffffffff),
+            scrollable: true,
+            title: const Text(
+              "Form Tambah Review",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            content: Form(
+              key: _formKey3,
+              child: SingleChildScrollView(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: "Nama Reviewer",
+                            labelText: "Nama Reviewer",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                          ),
+                          onChanged: (String? value) {
+                            setState(() {
+                              _nama = value!;
+                            });
+                          },
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return "Nama tidak boleh kosong!";
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: "Rating",
+                            labelText: "Rating",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                          ),
+                          onChanged: (String? value) {
+                            setState(() {
+                              _rating = int.parse(value!);
+                            });
+                          },
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return "Rating tidak boleh kosong!";
+                            }
+
+                            int? rating = int.tryParse(value);
+                            if (rating == null) {
+                              return "Rating harus berupa angka!";
+                            }
+
+                            if (rating <= 0 || rating > 5) {
+                              return "Rating harus antara 1 dan 5!";
+                            }
+
+                            return null;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: "Deskripsi",
+                            labelText: "Deskripsi",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                          ),
+                          onChanged: (String? value) {
+                            setState(() {
+                              _deskripsi = value!;
+                            });
+                          },
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return "Deskripsi review tidak boleh kosong!";
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ]
+                  )
+              ),
+            ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all(Colors.indigo),
+                  ),
+
+                  onPressed: () async {
+                    if (_formKey3.currentState!.validate()) {
+                      // Kirim ke Django dan tunggu respons
+                      final response = await request.postJson(
+                          "https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/review/create-flutter/",
+                          jsonEncode(<String, String>{
+                            'username' : widget.username,
+                            'reviewer_name': _nama,
+                            'id_buku': id.toString(),
+                            'rating': _rating.toString(),
+                            'review_text': _deskripsi,
+                          }));
+                      if (response['status'] == 'success') {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Review(username: widget.username),
+                            ));
+                      } else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content:
+                          Text("Terdapat kesalahan, silakan coba lagi."),
+                        ));
+                      }
+                    }
+                  },
+
+                  child: const Text(
+                    "Save",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: FilledButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<OutlinedBorder>(const RoundedRectangleBorder()),
+                      backgroundColor: MaterialStateProperty.all(const Color(0xff144f36)),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Tutup",
+                      style: TextStyle(
+                        color: Color(0xffededed),
+                        fontSize: 12,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    )
+                ),
+              ),
+            ],
+          );
+        }
+    );
   }
 
   @override
@@ -99,7 +283,7 @@ class _HomeState extends State<HomePage> {
           ],
         ),
         // Masukkan drawer sebagai parameter nilai drawer dari widget Scaffold
-        drawer: const LeftDrawer(),
+        drawer: LeftDrawer(username: widget.username,),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -125,7 +309,7 @@ class _HomeState extends State<HomePage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(14.0),
-                          child:Text('Hello, ${widget.userName} Welcome to',
+                          child:Text('Hello, ${widget.username} Welcome to',
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.white,
@@ -216,25 +400,34 @@ class _HomeState extends State<HomePage> {
                                       icon: const Icon(Icons.bookmark_add_outlined),
                                       onPressed: () async {
                                         var data = jsonEncode({'pk': snapshot.data![index].pk});
-                                        await request.post(
+                                        final response = await request.post(
                                           'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/booklist/add-book-flutter/',
                                           data,
                                         );
+                                        if (response['status'] == 'success') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                              content: Text("Buku berhasil ditambah ke booklist!")
+                                          ));
+                                        } else if (response['status'] == 'duplicate') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                              content: Text("Buku sudah ada dalam booklist anda!")
+                                          ));
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                              content: Text("Terjadi error saat penambahan buku")
+                                          ));
+                                        }
                                       },
                                     ),
                                     IconButton (
                                         icon: const Icon(Icons.reviews_outlined),
-                                        onPressed: () async {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => ReviewFormPage(id:snapshot.data![index].pk, username: widget.userName),
-                                              )
-                                          );
-                                        }
+                                        onPressed: () async =>  _formDialog(context, snapshot.data![index].pk),
                                     ),
                                     IconButton(
-                                      icon: Icon(Icons.bookmark_add),
+                                      icon: const Icon(Icons.bookmark_add),
                                       onPressed: () async {
                                         var data = jsonEncode({'bookId': snapshot.data![index].pk});
                                         final response = await request.post(

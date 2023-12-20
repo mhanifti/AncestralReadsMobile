@@ -1,16 +1,16 @@
 import 'package:ancestralreads/authentication/login.dart';
 import 'package:flutter/material.dart';
-import 'package:ancestralreads/left_drawer.dart';
 import 'package:http/http.dart' as http;
 import 'package:ancestralreads/Kelola/buku.dart';
 import 'dart:convert';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import '../left_drawer_staff.dart';
 
 class LibrarianPage extends StatefulWidget {
-  final String userName;
+  final String username;
 
-  const LibrarianPage({Key? key, required this.userName}) : super(key: key);
+  const LibrarianPage({Key? key, required this.username}) : super(key: key);
 
   @override
   _LibrarianState createState() => _LibrarianState();
@@ -296,6 +296,9 @@ class _LibrarianState extends State<LibrarianPage> {
                             content: Text("Buku baru berhasil disimpan!"),
                           ));
                           Navigator.of(context).pop();
+                          setState(() async {
+                            await fetchBuku();
+                          });
                         } else {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
@@ -567,12 +570,11 @@ class _LibrarianState extends State<LibrarianPage> {
                       shape: MaterialStateProperty.all<OutlinedBorder>(const RoundedRectangleBorder()),
                       backgroundColor: MaterialStateProperty.all(const Color(0xff144f36)),
                     ),
-                    //ancestralreads-b01-tk.pbp.cs.ui.ac.id
                     onPressed: () async {
                       if (_formKey2.currentState!.validate()) {
                         // Kirim ke Django dan tunggu respons
                         final response = await request.postJson(
-                            "http://localhost:8000/edit-flutter/$id",
+                            "https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/edit-flutter/$id",
                             jsonEncode(<String, String>{
                               'text_number' : _textNumber.toString(),
                               'title': _title,
@@ -589,6 +591,9 @@ class _LibrarianState extends State<LibrarianPage> {
                             content: Text("Data buku berhasil diubah"),
                           ));
                           Navigator.of(context).pop();
+                          setState(() async {
+                            await fetchBuku();
+                          });
                         } else {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
@@ -693,7 +698,7 @@ class _LibrarianState extends State<LibrarianPage> {
           ],
         ),
         // Masukkan drawer sebagai parameter nilai drawer dari widget Scaffold
-        drawer: const LeftDrawer(),
+        drawer: LeftDrawerStaff(username: widget.username),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -719,7 +724,7 @@ class _LibrarianState extends State<LibrarianPage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(14.0),
-                          child:Text('Hello, ${widget.userName} Welcome to',
+                          child:Text('Hello, ${widget.username} Welcome to',
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.white,
@@ -849,7 +854,7 @@ class _LibrarianState extends State<LibrarianPage> {
                                         ),
                                         onPressed: () async {
                                           final response = await request.postJson(
-                                              "http://localhost:8000/hapus-flutter/",
+                                              "https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/hapus-flutter/",
                                               jsonEncode(<String, int>{
                                                 'pk': snapshot.data![index].pk,
                                               }));

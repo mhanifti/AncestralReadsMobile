@@ -4,8 +4,9 @@ import 'package:ancestralreads/bookmarks/models.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final Product product;
+  final String username;
 
-  const ProductDetailPage({Key? key, required this.product}) : super(key: key);
+  const ProductDetailPage({Key? key, required this.product, required this.username}) : super(key: key);
 
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
@@ -18,7 +19,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       appBar: AppBar(
         title: const Text('Item Detail'),
       ),
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer(username: widget.username),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(

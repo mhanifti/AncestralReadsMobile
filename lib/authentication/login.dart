@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                     String uname = response['username'];
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => LibrarianPage(userName: uname),
+                      MaterialPageRoute(builder: (context) => LibrarianPage(username: uname),
                     ));
                     ScaffoldMessenger.of(context)
                       ..hideCurrentSnackBar()
@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                     String uname = response['username'];
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage(userName: uname)),
+                      MaterialPageRoute(builder: (context) => HomePage(username: uname)),
                     );
                     ScaffoldMessenger.of(context)
                       ..hideCurrentSnackBar()
