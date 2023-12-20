@@ -15,23 +15,24 @@ class LeftDrawerStaff extends StatelessWidget {
             decoration: BoxDecoration(
               color: Color(0xff144f36),
             ),
-            child: Column(
-              children: [
-                Text(
-                  'Ancestral Reads',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w700,
-                  ),
+            child: Center(
+              child: Text(
+                'Ancestral Reads',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xFFECECEC),
+                  fontSize: 25,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w700,
                 ),
-              ],
+              ),
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.home_outlined),
+            leading: const Icon(
+                Icons.home_outlined,
+              color: Color(0xfff9fffc),
+            ),
             title: const Text(
                 'Staff Page',
                   style: TextStyle(

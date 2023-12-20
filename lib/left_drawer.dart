@@ -19,23 +19,24 @@ class LeftDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               color: Color(0xff144f36),
             ),
-            child: Column(
-              children: [
-                Text(
-                  'Ancestral Reads',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w700,
-                  ),
+            child: Center (
+              child: Text(
+                'Ancestral Reads',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xFFECECEC),
+                  fontSize: 25,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w700,
                 ),
-              ],
+              ),
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.home_outlined),
+            leading: const Icon(
+                Icons.home_outlined,
+              color: Color(0xfff9fffc),
+            ),
             title: const Text(
                 'Home Page',
                   style: TextStyle(
@@ -96,7 +97,10 @@ class LeftDrawer extends StatelessWidget {
           // ),
           
           ListTile(
-            leading: const Icon(Icons.app_registration),
+            leading: const Icon(
+                Icons.reviews_outlined,
+              color: Color(0xfff9fffc),
+            ),
             title: const Text(
                 'Book Reviews',
                 style: TextStyle(
@@ -116,7 +120,10 @@ class LeftDrawer extends StatelessWidget {
               },
             ),
           ListTile(
-            leading: const Icon(Icons.menu_book),
+            leading: const Icon(
+                Icons.menu_book,
+              color: Color(0xfff9fffc),
+            ),
             title: const Text(
                 'Booklist',
                 style: TextStyle(
@@ -135,7 +142,11 @@ class LeftDrawer extends StatelessWidget {
               );
             },
           ),
-          ListTile( //left drawernya bookmarks
+          ListTile(
+            leading: const Icon(
+              Icons.bookmark_border,
+              color: Color(0xfff9fffc),
+            ),//left drawernya bookmarks
             title: const Text(
                 'Bookmarks',
                 style: TextStyle(

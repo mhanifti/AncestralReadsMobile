@@ -178,39 +178,48 @@ class _FormRegister extends State<RegisterForm> {
                 // Menggunakan padding sebesar 8 pixels
                 padding: const EdgeInsets.only(top: 24.0),
                 child:Center (
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 20, 79, 54),
-                      fixedSize: const Size(250, 32),
-                    ),
-                    onPressed: () async {
-                      final response = await request.post(
-                          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/auth/register/',
-                          {
-                            "username": username,
-                            "password1": password,
-                            "password2": password1,
-                            'is_staff': 'true',
-                          });
+                  child: SizedBox(
+                    height: 50,
+                    width: 220,
+                    child: TextButton(
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<OutlinedBorder>(const RoundedRectangleBorder()),
+                        backgroundColor: MaterialStateProperty.all(const Color(0xff144f36)),
+                      ),
+                      onPressed: () async {
+                        final response = await request.post(
+                            'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/auth/register/',
+                            {
+                              "username": username,
+                              "password1": password,
+                              "password2": password1,
+                              'is_staff': 'true',
+                            });
 
-                      if (response['status']==true) {
-                        // ignore: use_build_context_synchronously
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                              const LoginApp(),
-                            ));
-                      } else {
-                        setState(() {
-                          message = response['message'];
-                          print(message);
-                        });
-                      }
-                    },
-                    child: const Text(
-                      "Sign Up as Pustakawan",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                        if (response['status']==true) {
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                const LoginApp(),
+                              ));
+                        } else {
+                          setState(() {
+                            message = response['message'];
+                            print(message);
+                          });
+                        }
+                      },
+                      child: const Text(
+                        "Sign Up as Pustakawan",
+                        style: TextStyle(
+                          color: Color(0xFFE7E7E7),
+                          fontSize: 18,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -219,41 +228,50 @@ class _FormRegister extends State<RegisterForm> {
                 // Menggunakan padding sebesar 8 pixels
                 padding: const EdgeInsets.only(top: 5.0),
                 child:Center (
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 20, 79, 54),
-                      fixedSize: const Size(250, 32),
-                    ),
-                    onPressed: () async {
-                      final response = await request.post(
-                          'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/auth/register/',
-                          {
-                            "username": username,
-                            "password1": password,
-                            "password2": password1,
-                            'is_staff': '',
-                          });
+                  child: SizedBox (
+                    height: 50,
+                    width: 220,
+                    child: TextButton(
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<OutlinedBorder>(const RoundedRectangleBorder()),
+                        backgroundColor: MaterialStateProperty.all(const Color(0xff144f36)),
+                      ),
+                      onPressed: () async {
+                        final response = await request.post(
+                            'https://ancestralreads-b01-tk.pbp.cs.ui.ac.id/auth/register/',
+                            {
+                              "username": username,
+                              "password1": password,
+                              "password2": password1,
+                              'is_staff': '',
+                            });
 
-                      if (response['status']==true) {
-                        // ignore: use_build_context_synchronously
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                              const LoginApp(),
-                            ));
-                      } else {
-                        setState(() {
-                          message = response['message'];
-                          print(message);
-                        });
-                      }
-                    },
-                    child: const Text(
-                      "Sign Up as Pembaca",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                        if (response['status']==true) {
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                const LoginApp(),
+                              ));
+                        } else {
+                          setState(() {
+                            message = response['message'];
+                            print(message);
+                          });
+                        }
+                      },
+                      child: const Text(
+                        "Sign Up as Pembaca",
+                        style: TextStyle(
+                          color: Color(0xFFE7E7E7),
+                          fontSize: 18,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
-                  ),
+                  )
                 ),
               ),
               Center(
